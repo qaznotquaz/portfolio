@@ -1,44 +1,22 @@
-{% assign setting=site.data.characters[page.skin].setting %}
-{% assign this-skin=site.data.characters[page.skin] %}
-{% assign entries=site.data.volumes[page.volume].entries %}
-
-{% for entry in entries %}
-    {% if page.id == entry %}
-        {% unless forloop.first %}
-            {% assign pind=forloop.index0 | minus: 1 %}
-            {% assign ppage=site.volumes | where: "id", entries[pind] | first %}
-            {% assign plink='' | append: site.baseurl | append: ppage.url %}
-            {% assign ptxt='<i class="fas fa-chevron-up"></i>' %}
-        {% endunless %}
-
-        {% unless forloop.last %}
-            {% assign nind=forloop.index0 | plus: 1 %}
-            {% assign npage=site.volumes | where: "id", entries[nind] | first %}
-            {% assign nlink='' | append: site.baseurl | append: npage.url %}
-            {% assign ntxt='<i class="fas fa-chevron-down"></i>' %}
-        {% endunless %}
-    {% endif %}
-{% endfor %}
+{% assign collection=site.collections[page.collection] %}
 
 <div id="sidebar">
     <ul>
-        <li id="hamburger">
-            <i class="fas fa-bars"></i>
+        <li id="home">
+            <i class="fas fa-home"></i>
         </li>
-        <li id="elevator-up" style="background: {{ this-skin.bg-2 }};
-                        border-color: {{ this-skin.acc-1 }};
-                        color: {{ this-skin.text-color }}">
-            <a href="{{ plink }}">{{ ptxt }}</a>
-        </li>
-        <li id="urhere" style="background: {{ this-skin.bg-2 }};
-                border-color: {{ this-skin.acc-1 }};
-                color: {{ this-skin.text-color }}">
-            <a><i class="fas -map-marker-alt"></i>{{ page.title }}</a>
-        </li>
-        <li id="elevator-down" style="background: {{ this-skin.bg-2 }};
-                        border-color: {{ this-skin.acc-1 }};
-                        color: {{ this-skin.text-color }}">
-            <a href="{{ nlink }}">{{ ntxt }}</a>
-        </li>
+
+        {% for entry in collection %}
+            {% if page.id == entry %}
+                <li class="sidebar-title active">
+                    <a>{{ entry.title }}</a>
+                </li>
+            {% else %}
+                <li class="sidebar-title">
+                    {% assign link='' | append: site.baseurl | append entry.url %}
+                    <a href="{{ link }}">entry.title</a>
+                </li>
+            {% endif %}
+        {% endfor %}
     </ul>
 </div>

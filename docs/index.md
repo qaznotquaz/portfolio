@@ -1,7 +1,6 @@
 ---
-layout: snippet
-title: ""
-skin: nobody
+layout: article
+color-scheme: paper
 ---
 
-ignore this page.
+front page test

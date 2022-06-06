@@ -1,0 +1,8 @@
+{% assign cscheme = site.data.color_schemes[include.color_scheme] %}
+
+$bg-1: {{ cscheme.bg-1 }};
+$bg-2: {{ cscheme.bg-2 }};
+$bg-3: {{ cscheme.bg-3 }};
+$text-color: {{ cscheme.text-color }};
+$acc-1: {{ cscheme.acc-1 }};
+$acc-2: {{ cscheme.acc-2 }};

@@ -57,23 +57,6 @@ html {
   text-align: left;
 }
 
-@mixin swatch {
-  $size: 27px;
-  height: $size;
-  width: $size;
-  float: left;
-  cursor: pointer;
-  border: 2px solid;
-  margin: 0;
-  transition: width 0.1s ease-in-out;
-  font-size: 10pt;
-  display: flex;
-  font-weight: bold;
-  padding-left: 5px;
-  align-items: center;
-  white-space: nowrap;
-}
-
 a:link {
   text-decoration: none;
   color: inherit;
@@ -148,7 +131,7 @@ body {
   border-right: 4px solid $acc-1;
   bottom: 0;
 
-  #hamburger {
+  #home {
     font-size: 19pt;
     height: 49px;
     width: 100%;
@@ -157,14 +140,6 @@ body {
     border-right: 0;
     border-left: 0;
     background: #fff;
-  }
-
-  #urhere {
-    overflow: hidden;
-  }
-
-  #elevator-down {
-    margin-top: -75px;
   }
 
   ul {
@@ -246,26 +221,9 @@ body {
   }
 
   div {
-    padding: 0 18px;
-    max-height: 0;
-    overflow: hidden;
+    padding: 18px 18px 0;
     font-size: $text-size-1;
     color: $text-color;
-  }
-
-  .chat-message {
-    display: inline-block;
-    padding: -18px;
-    height: 73px;
-    font-size: 20pt;
-    font-weight: normal;
-    width: 100%;
-    border: 0;
-    align-items: center;
-  }
-
-  .true-parity {
-    background-color:black;
   }
 
   p {
@@ -289,22 +247,6 @@ body {
       display: block;
       z-index: -1;
     }
-  }
-
-  .censor {
-    display: inline;
-    color: rgba(0, 0, 0, 0);
-    text-decoration: black line-through;
-  }
-
-  .headache, .blank {
-    display: inline;
-    color: rgba(0, 0, 0, 0);
-  }
-
-  .scramble {
-    display: inline-block;
-    font-size: 13pt;
   }
 }
 

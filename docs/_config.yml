@@ -1,16 +1,28 @@
 url: "https://portfolio.sinoper.dev"
-title: Jess' Portfolio
-description:
+title: "Jess' Portfolio"
+description: '[wip]'
 
-# collections:
-#   volumes:
-#     output: true
-#   profiles:
-#     output: true
-#   navigation:
-#     output: true
-#     permalink: /:slug
-#
-# collections_dir: pages
-#
-# permalink: /:collection/:categories/:slug
+collections:
+  sinoper-v1:
+    output: true
+    sort_by: index
+  sinoper-v2:
+    output: true
+    sort_by: index
+  library:
+    output: true
+    sort_by: index
+  modding:
+    output: true
+    sort_by: index
+  storyteller:
+    output: true
+    sort_by: index
+  navigation:
+    output: true
+    sort_by: index
+    permalink: /:slug
+
+collections_dir: projects
+
+permalink: /:collection/:categories/:slug

@@ -1,0 +1,6 @@
+<div class="section">
+    <div class="section-header">{{ include.title | default: "-" }}</div>
+    <div class="section-content">
+        {{ include.content | default: "-" | markdownify }}
+    </div>
+</div>
