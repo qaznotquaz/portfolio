@@ -1,0 +1,16 @@
+url: "https://portfolio.sinoper.dev"
+title: Jess' Portfolio
+description:
+
+# collections:
+#   volumes:
+#     output: true
+#   profiles:
+#     output: true
+#   navigation:
+#     output: true
+#     permalink: /:slug
+#
+# collections_dir: pages
+#
+# permalink: /:collection/:categories/:slug

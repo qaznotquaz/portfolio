@@ -1,0 +1,327 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap");
+@import "font-awesome/fontawesome.scss";
+@import "font-awesome/solid.scss";
+
+@font-face {
+  font-family: Ubuntu, sans-serif;
+}
+
+$default-font: Ubuntu, sans-serif !default;
+$default-text-size-1: 12pt;
+$default-text-size-2: 14pt;
+
+$font: $default-font !default;
+$text-size-1: $default-text-size-1 !default;
+$text-size-2: $default-text-size-2 !default;
+$section-bg: $bg-2 !default;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+:root {
+  font-family: $font;
+}
+
+@mixin tab {
+  font-family: $default-font;
+  font-size: $default-text-size-2;
+  background-color: #e7e7e7;
+  padding: 9px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+}
+
+@mixin swatch {
+  $size: 27px;
+  height: $size;
+  width: $size;
+  float: left;
+  cursor: pointer;
+  border: 2px solid;
+  margin: 0;
+  transition: width 0.1s ease-in-out;
+  font-size: 10pt;
+  display: flex;
+  font-weight: bold;
+  padding-left: 5px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+a:link {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+#top-nav {
+  @include tab;
+  display: flex;
+  border-bottom: 4px solid $acc-1;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    li {
+      height: 27px;
+      min-width: 27px;
+      margin-right: 10px;
+
+      a {
+        @include swatch;
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+
+        i {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+body {
+  background: $bg-1;
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+}
+
+#content-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#sidebar {
+  font-family: Ubuntu, sans-serif;
+  width: 45px;
+  background: $section-bg;
+  transition: width 0.2s ease-in-out;
+  border-right: 4px solid $acc-1;
+  bottom: 0;
+
+  #hamburger {
+    font-size: 19pt;
+    height: 49px;
+    width: 100%;
+    margin: 0;
+    border: 4px solid #88f;
+    border-right: 0;
+    border-left: 0;
+    background: #fff;
+  }
+
+  #urhere {
+    overflow: hidden;
+  }
+
+  #elevator-down {
+    margin-top: -75px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin-top: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+
+    li {
+      @include swatch;
+      padding: 9px;
+      margin-top: -4px;
+      height: 73px;
+      font-size: 20pt;
+      font-weight: normal;
+      width: 100%;
+      border-top-width: 4px;
+      border-left: 0;
+      border-right: 0;
+      border-bottom-width: 4px;
+      align-items: center;
+      transition: height 0.1s ease-in-out, margin-top 0.1s ease-in-out;
+
+      a {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+
+        i {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+#title {
+  padding: 12px 0 12px 24px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  backdrop-filter: blur(5px) brightness(90%);
+  font-size: $text-size-2*1.5;
+  $title-color: $acc-2 !default;
+  color: $title-color;
+}
+
+@media screen and (max-width: 700px) {
+  .section {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .section {
+    width: 75%;
+  }
+}
+
+.section {
+  margin: 25px auto;
+  border-left: 4px solid $acc-2;
+  background: $section-bg;
+  text-align: justify;
+  text-justify: inter-word;
+
+  button {
+    @include tab;
+    font-family: $font;
+    font-size: $text-size-2;
+    background-color: $bg-3;
+    cursor: pointer;
+  }
+
+  div {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    font-size: $text-size-1;
+    color: $text-color;
+  }
+
+  .chat-message {
+    display: inline-block;
+    padding: -18px;
+    height: 73px;
+    font-size: 20pt;
+    font-weight: normal;
+    width: 100%;
+    border: 0;
+    align-items: center;
+  }
+
+  .true-parity {
+    background-color:black;
+  }
+
+  p {
+    margin-top: 0;
+  }
+
+  i, em {
+    color: $acc-1;
+  }
+
+  b, strong {
+    color: $acc-2;
+  }
+
+  .image-container {
+    position: relative;
+
+    img {
+      position: absolute;
+      width: auto;
+      display: block;
+      z-index: -1;
+    }
+  }
+
+  .censor {
+    display: inline;
+    color: rgba(0, 0, 0, 0);
+    text-decoration: black line-through;
+  }
+
+  .headache, .blank {
+    display: inline;
+    color: rgba(0, 0, 0, 0);
+  }
+
+  .scramble {
+    display: inline-block;
+    font-size: 13pt;
+  }
+}
+
+@if variable-exists(background-image) {
+  #main-content:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    background-image: $background-image;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-size: cover;
+  }
+}
