@@ -1,4 +1,4 @@
-{% assign cscheme = site.data.color_schemes[include.color_scheme] %}
+{% assign cscheme = site.data.color-schemes[include.color-scheme] %}
 
 $bg-1: {{ cscheme.bg-1 }};
 $bg-2: {{ cscheme.bg-2 }};
