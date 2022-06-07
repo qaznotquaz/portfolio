@@ -96,7 +96,6 @@ a:active {
       margin-right: 10px;
 
       a {
-        @include swatch;
         display: flex;
         height: 100%;
         width: 100%;
@@ -153,7 +152,6 @@ body {
     gap: 0;
 
     li {
-      @include swatch;
       padding: 9px;
       margin-top: -4px;
       height: 73px;

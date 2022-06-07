@@ -1,5 +1,5 @@
 ---
 ---
 
-{% include color-scheme.scss color-scheme=page.color-scheme %}
+{% include color-scheme.scss color-scheme='paper' %}
 @import "default";
