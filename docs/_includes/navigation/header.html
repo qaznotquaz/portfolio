@@ -2,12 +2,13 @@
 	<div id="top-nav">
 		<ul>
 			{% for tab in site.data.banner-tabs['tabs'] %}
-				{% if tab.name == page.collection %}
+			    {% assign link = 'https://portfolio.sinoper.dev/' | append: tab.folder %}
+				{% if tab.folder == page.collection %}
 				    {% assign is-active = 'active' %}
 				    {% assign link = '' %}
 				{% endif %}
 				<li>
-					<a href="{{ link | default: tab.hard-link }}"
+					<a href="{{ link }}"
 				       class="banner-tab {{ is-active | default: 'inactive' }}">
 				       <i class='fas {{ swatch.icon }}'></i>
 				       {{ swatch.name }}

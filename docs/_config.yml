@@ -18,11 +18,7 @@ collections:
   storyteller:
     output: true
     sort_by: index
-  navigation:
-    output: true
-    sort_by: index
-    permalink: /:slug
 
 collections_dir: projects
 
-permalink: /:collection/:categories/:slug
+permalink: /:categories/:slug
