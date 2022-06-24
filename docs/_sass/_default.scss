@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap");
 @import "font-awesome/fontawesome.scss";
 @import "font-awesome/solid.scss";
+@import "font-awesome/brands.scss";
 
 @font-face {
   font-family: Ubuntu, sans-serif;
@@ -243,7 +244,6 @@ body {
       }
 
       &.inactive {
-        //background-color: $bg-3;
         -moz-transition: all 0.2s ease-in-out;
         -o-transition: all 0.2s ease-in-out;
         -webkit-transition: all 0.2s ease-in-out;
@@ -312,7 +312,12 @@ body {
     color: $acc-2;
   }
 
+  // the title strip at the top of the document, as well as the github icon on the right.
   #title {
+    //display: flex;
+    //align-items: center;
+    //height: 58px;
+
     padding: 12px 0 12px 16px;
     width: 100%;
     border: none;
@@ -322,6 +327,50 @@ body {
     font-size: $text-size-2*1.5;
     $title-color: $acc-2 !default;
     color: $title-color;
+
+    #github {
+      position: relative;
+      float: right;
+      background-color: #ed6;
+      border: 3px solid $bg-3;
+      height: 48px;
+      width: 48px;
+      transform: rotate(15deg);
+      margin-top: 4px;
+      margin-right: 14px;
+
+      -moz-transition: all 0.2s ease-in-out;
+      -o-transition: all 0.2s ease-in-out;
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        border: 3px solid $acc-2;
+        transform: rotate(5deg);
+
+        a i {
+          color: $acc-2;
+        }
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+
+        height: 100%;
+        width: 100%;
+
+        i {
+          margin: auto;
+          color: $bg-3;
+
+          -moz-transition: all 0.2s ease-in-out;
+          -o-transition: all 0.2s ease-in-out;
+          -webkit-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
+        }
+      }
+    }
   }
 }
 
