@@ -1,11 +1,11 @@
-{% assign collection=site.collections | where: "label", "sinoper-v1" | first %}
+{% assign collection=site.collections | where: "label", page.collection | first %}
 {% assign current-categ=nil%}
 
-<div id="sidebar">
+<div id="sidebar" class="closed">
+    <div id="arrow-button"/>
+        <i class="fas fa-chevron-right"></i>
+    </div>
     <ul>
-        <li id="home">
-            <i class="fas fa-home"></i>
-        </li>
         {% for entry in collection.docs %}
             {% unless current-categ == entry.category %}
                 {% assign current-categ = entry.category %}

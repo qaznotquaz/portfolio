@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Sinoper V.1 / Chatbot
+title: Sinoper V.2 / Assistant
 color-scheme: paper
 ---
 

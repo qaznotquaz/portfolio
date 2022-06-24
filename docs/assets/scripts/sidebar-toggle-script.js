@@ -23,7 +23,7 @@ function collapse(e) {
 
 function expand(e) {
     requestAnimationFrame(function () {
-        const width = e.scrollWidth + 10;
+        const width = e.scrollWidth;
         e.style.width = width + 'px';
     });
 }
@@ -47,7 +47,18 @@ function collapseSwatch() {
 function toggleSidebar() {
     const e = this;
     const sidebar = document.getElementById('sidebar')
-    const urhere = document.getElementById('urhere')
+
+    if (sidebar.className === 'closed') {
+        expand(sidebar)
+        sidebar.className = 'open'
+
+
+    } else {
+        sidebar.className = 'closed'
+        collapse(sidebar)
+    }
+
+    /*const urhere = document.getElementById('urhere')
     const up = document.getElementById('elevator-up')
     const dn = document.getElementById('elevator-down')
 
@@ -58,7 +69,7 @@ function toggleSidebar() {
         dn.style.height = null;
         dn.style.marginTop = null;
         e.innerHTML = '<i class="fas fa-bars"></i>'
-        collapse(sidebar);
+
     } else {
         e.setAttribute('out', 'yes')
         up.style.height = "50px";
@@ -66,14 +77,8 @@ function toggleSidebar() {
         dn.style.height = "50px";
         dn.style.marginTop = "-4px";
         e.innerHTML = '<i class="fas fa-bars"></i> Nav-Menu'
-        expand(sidebar);
-    }
+
+    }*/
 }
 
-document.getElementById('hamburger').addEventListener('click', toggleSidebar);
-
-for (const element of document.getElementsByClassName('banner-swatch')) {
-    element.addEventListener('mouseenter', expandSwatch);
-    element.addEventListener('mouseleave', collapseSwatch);
-    element.innerHTML = element.getAttribute('icon-text')
-}
+document.getElementById('arrow-button').addEventListener('click', toggleSidebar);

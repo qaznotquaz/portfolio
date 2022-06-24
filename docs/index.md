@@ -1,6 +1,7 @@
 ---
-layout: article
+layout: home
 color-scheme: paper
+title: Portfolio Homepage
 ---
 
-front page test
+Hello world!

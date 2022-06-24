@@ -6,3 +6,9 @@ $bg-3: {{ cscheme.bg-3 }};
 $text-color: {{ cscheme.text-color }};
 $acc-1: {{ cscheme.acc-1 }};
 $acc-2: {{ cscheme.acc-2 }};
+
+{% if cscheme.bg-img %}
+  $bg-img: '{{ '../images/' | append: cscheme.bg-img }}';
+{% endif %}
+
+{{ cscheme.custom-scss }}

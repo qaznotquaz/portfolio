@@ -1,16 +1,19 @@
 tabs:
+  - name: Home
+    icon: fa-home
+    folder: /
   - name: Sinoper V.1
     icon: fa-feather-alt
-    folder: sinoper-v1
+    folder: /sinoper-v1
   - name: Sinoper V.2.js
     icon: fa-crow
-    folder: sinoper-v2
+    folder: /sinoper-v2
   - name: Library
     icon: fa-book
-    folder: library
+    folder: /library
   - name: Hades Modding
     icon: fa-code-branch
-    folder: modding
+    folder: /modding
   - name: Storyteller
     icon: fa-pen-fancy
-    folder: storyteller
+    folder: /storyteller

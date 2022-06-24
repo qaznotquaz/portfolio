@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Sinoper V.1 / Chatbot
+title: Library
 color-scheme: paper
 ---
 

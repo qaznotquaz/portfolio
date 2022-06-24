@@ -2,20 +2,25 @@
 	<div id="top-nav">
 		<ul>
 			{% for tab in site.data.banner-tabs['tabs'] %}
-			    {% assign link = 'https://portfolio.sinoper.dev/' | append: tab.folder %}
-				{% if tab.folder == page.collection %}
-				    {% assign is-active = 'active' %}
-				    {% assign link = '' %}
+			    {% assign link = tab.folder | relative_url %}
+			    {% assign href = ' href="' | append: link | append: '"'%}
+			    {% assign slash_coll= '/' | append: page.collection %}
+				{% if tab.folder == slash_coll %}
+				    {% assign classes = 'active' %}
+				    {% assign href = '' %}
+				{% else %}
+				    {% assign classes = 'inactive' %}
 				{% endif %}
-				<li>
-					<a href="{{ link }}"
-				       class="banner-tab {{ is-active | default: 'inactive' }}">
-				       <i class='fas {{ swatch.icon }}'></i>
-				       {{ swatch.name }}
+
+				{% if tab.name == 'Home' %}
+				    {% assign classes=classes | append: ' home-tab' %}
+				{% endif %}
+				<li class="{{ classes }}">
+					<a{{ href }}>
+				       <i class='fas {{ tab.icon }}'></i>
 					</a>
 				</li>
-				{% assign is-active = false %}
-				{% assign link = false %}
+				{% assign classes = false %}
 			{% endfor %}
 		</ul>
 	</div>

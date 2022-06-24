@@ -5,6 +5,10 @@ paper:
   text-color: '#222'
   acc-1: '#000'
   acc-2: '#000'
+  bg-img: 'paper.jpg'
+  custom-scss: '#main-content:before {
+  filter: saturate(30%) opacity(80%);
+}'
 
 alt:
   bg-1: '#000'
