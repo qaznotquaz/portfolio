@@ -8,7 +8,17 @@ collections:
     sort_by: index
   sinoper-v2:
     output: true
-    sort_by: index
+    order:
+      - index.md
+      - command-core.md
+      - Connections/index.md
+      - Connections/tw-user.md
+      - Connections/tw-api.md
+      - Connections/discord-user.md
+      - Connections/mongo.md
+      - Connections/overlay-server.md
+      - Connections/spotify.md
+      - overlay-client.md
   library:
     output: true
     sort_by: index
@@ -22,6 +32,3 @@ collections:
 collections_dir: projects
 
 permalink: /:categories/:slug
-
-kramdown:
-  syntax_highlighter: rouge
