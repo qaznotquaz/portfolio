@@ -1,9 +1,10 @@
 ---
 layout: article
-title: Discord Connection
+title: Misc.
 color-scheme: paper
 category: Connections
-index: 5
+index: 8
 ---
 
-A class to facilitate a Discord Client for Sinoper to use to connect to Discord.
+
+Not all connections are created equal - some of them are

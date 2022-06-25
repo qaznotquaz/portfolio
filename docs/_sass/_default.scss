@@ -221,6 +221,20 @@ body {
         text-decoration-thickness: 1.5px;
       }
 
+      &#sidebar-title {
+        a {
+          border-left: 4px solid transparent;
+          border-right: 4px solid transparent;
+          border-bottom: 4px solid $bg-3;
+          font-weight: bold;
+          font-size: 16pt;
+
+          &:hover {
+            color: $text-color;
+          }
+        }
+      }
+
       // link element must be relative so that it can be shunted on and off screen correctly.
       a {
         height: 100%;
@@ -385,6 +399,31 @@ body {
 
   h1 {
     margin: 0;
+
+    &:target {
+      color: $bg-1;
+    }
+
+    a {
+      margin-right: 9px;
+
+      i.fas {
+        font-size: 30px;
+        margin: auto;
+        color: $bg-3;
+
+        -moz-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        -webkit-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
+      }
+
+      &:hover {
+        i.fas {
+          color: $bg-1;
+        }
+      }
+    }
   }
 
   hr {

@@ -4,11 +4,7 @@ title: Sinoper V.1 / Chatbot
 color-scheme: paper
 ---
 
-
-# Under Construction
 This part of the portfolio is still currently under construction.
 
-----
-
-# Command Parsing via Regex
+{% include heading-with-link.md text='Command Parsing via Regex' %}
 This part of the portfolio is still currently under construction.

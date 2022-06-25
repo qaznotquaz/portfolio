@@ -6,6 +6,7 @@
         <i class="fas fa-chevron-right"></i>
     </div>
     <ul>
+        <li id='sidebar-title'><a>Documents in Project</a></li>
         {% for entry in sorted %}
             {% if entry.title == page.title %}
                 {% assign classes=' active' %}
