@@ -1,12 +1,12 @@
 {% assign collection=site.collections | where: "label", page.collection | first %}
-{% assign current-categ=nil%}
+{% assign sorted=collection.docs | sort: "index" %}
 
 <div id="sidebar" class="closed">
     <div id="arrow-button"/>
         <i class="fas fa-chevron-right"></i>
     </div>
     <ul>
-        {% for entry in collection.docs %}
+        {% for entry in sorted %}
             {% if entry.title == page.title %}
                 {% assign classes=' active' %}
             {% else %}
