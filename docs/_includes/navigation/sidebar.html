@@ -7,25 +7,30 @@
     </div>
     <ul>
         {% for entry in collection.docs %}
-            {% unless current-categ == entry.category %}
-                {% assign current-categ = entry.category %}
-                {% if current-categ %}
-                    <li class="sidebar-title category">
-                        {{ entry.category }}
-                    </li>
-                {% endif %}
-            {% endunless %}
-
-            {% if entry.category %}
-                {% assign indent='---' %}
+            {% if entry.title == page.title %}
+                {% assign classes=' active' %}
             {% else %}
-                {% assign indent='' %}
+                {% assign classes=' inactive' %}
             {% endif %}
 
-            <li class="sidebar-title">
-                {% assign link='' | append: site.baseurl | append: entry.url %}
-                <a href="{{ link }}">{{ indent }}{{ entry.title }}</a>
-            </li>
+            {% if entry.category %}
+                {% if entry.title == entry.category %}
+                    {% assign classes=classes | append: ' category' %}
+                {% else %}
+                    {% assign classes=classes | append: ' indent' %}
+                {% endif %}
+            {% endif %}
+
+            {% if entry.title == page.title %}
+                <li class="sidebar-title{{ classes }} active">
+                    <a>{{ entry.title }}</a>
+                </li>
+            {% else %}
+                <li class="sidebar-title{{ classes }} inactive">
+                    {% assign link='' | append: site.baseurl | append: entry.url %}
+                    <a href="{{ link }}">{{ entry.title }}</a>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
 </div>

@@ -22,3 +22,6 @@ collections:
 collections_dir: projects
 
 permalink: /:categories/:slug
+
+kramdown:
+  syntax_highlighter: rouge

@@ -42,9 +42,12 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
 // --- end affixing scrollbar ---
 
-:root { font-family: $font; }
+:root {
+  font-family: $font;
+}
 
 /* strip text decoration based on visitation from links. because i use icon buttons in quite a few places,
     and because i want more control over the presentation of links within text, this makes the formatting
@@ -73,7 +76,6 @@ a {
 }
 
 
-
 // the main body is a row-oriented flexbox containing:
 //  1. the sidebar
 //  2. the content column
@@ -82,6 +84,7 @@ body {
   margin: 0;
   display: flex;
   min-height: 100vh;
+  width: 100%;
 }
 
 // the sidebar has an arrow button which opens and collapses it, as well as a list of all
@@ -102,7 +105,7 @@ body {
     // this moves all the text from page links off-screen to the left.
     // other solutions have issues because of overflow clipping and auto-sizing.
     ul li a {
-      left: -108%;
+      left: -110%;
     }
   }
 
@@ -165,7 +168,7 @@ body {
 
   ul {
     list-style-type: none;
-    margin-top: 0;
+    margin-top: -52px;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -173,25 +176,61 @@ body {
     width: auto;
     gap: 0;
 
-    // these numbers are going to need some adjusting.
     li {
       padding: 9px;
-      margin-top: -4px;
-      height: 73px;
-      font-size: 16pt;
+      margin-top: 8px;
+      font-size: 14pt;
       font-weight: normal;
       width: auto;
-      border-top-width: 4px;
-      border-left: 0;
-      border-right: 0;
-      border-bottom-width: 4px;
+
       align-items: flex-start;
       white-space: nowrap;
 
+      &.category {
+        a {
+          border-bottom: 4px solid $bg-3;
+        }
+      }
+
+      &.indent {
+        a {
+          margin-left: 40px;
+        }
+      }
+
+      &.active {
+        font-weight: bold;
+
+        a {
+          border-left: 6px solid $bg-1;
+        }
+
+        & {
+          &.category {
+            a {
+              border-bottom: 4px solid $bg-1;
+            }
+          }
+        }
+      }
+
       // link element must be relative so that it can be shunted on and off screen correctly.
       a {
+        height: 100%;
+        width: 100%;
+        border-left: 4px solid $bg-3;
         position: relative;
-        transition: left 0.2s ease-in-out;
+        padding: 9px;
+
+        -moz-transition: all 0.2s ease-in-out;
+        -o-transition: all 0.2s ease-in-out;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          border-color: $bg-1;
+          color: $bg-1;
+        }
       }
     }
   }
@@ -254,10 +293,19 @@ body {
 
         i {
           color: $bg-3;
+
+          -moz-transition: all 0.2s ease-in-out;
+          -o-transition: all 0.2s ease-in-out;
+          -webkit-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
         }
 
         &:hover {
           height: 48px;
+
+          i {
+            color: $bg-1;
+          }
         }
       }
 
@@ -307,12 +355,13 @@ body {
   i:not(.fa, .fab), em {
     color: $acc-1;
   }
+
   b, strong {
     color: $acc-2;
   }
 
   a {
-    color: $acc-1;
+    color: $bg-3;
     font-weight: bold;
 
     -moz-transition: all 0.1s ease-in-out;
@@ -321,7 +370,7 @@ body {
     transition: all 0.1s ease-in-out;
 
     &:hover {
-      color: $bg-3;
+      color: $bg-1;
     }
   }
 
@@ -333,6 +382,21 @@ body {
     color: transparent;
     border: 1px solid $bg-3;
     margin: 24px 0 16px;
+  }
+
+  // layout arrangement for code blocks
+  .highlight {
+    margin: 0 auto;
+    padding-left: 16px;
+    overflow-x: scroll;
+    max-width: 85vw;
+    background-color: rgba(#ed6, 0.3);
+    border-radius: 4px;
+
+    pre {
+      code {
+      }
+    }
   }
 
   // the title strip at the top of the document, as well as the github icon on the right.
@@ -392,16 +456,25 @@ body {
       }
     }
   }
+
+  #main-content {
+    padding-top: 0;
+    max-width: 100%;
+  }
 }
 
 /* if i decide to apply a backdrop filter, this will cover cases where the user
   is using firefox since it doesn't currently fully support filters. */
-@-moz-document url-prefix() {}
+@-moz-document url-prefix() {
+}
 
 /* once i return to fixing the layout, these will provide a threshold around which
     to accommodate for phone screens. */
-@media screen and (max-width: 700px) {}
-@media screen and (min-width: 700px) {}
+@media screen and (max-width: 700px) {
+}
+
+@media screen and (min-width: 700px) {
+}
 
 /* because i'm testing with different color schemes, and not all such schemes include
     background images, i only want to define a background image if the scheme called
@@ -409,7 +482,7 @@ body {
 @if variable-exists(bg-img) {
   $background-image: url($bg-img);
 
-  #main-content:before {
+  body:before {
     content: "";
     position: fixed;
     top: 0;

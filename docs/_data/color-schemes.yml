@@ -7,7 +7,7 @@ paper:
   acc-2: '#000'
   acc-3: '#ae5608'
   bg-img: 'paper.jpg'
-  custom-scss: '#main-content:before {
+  custom-scss: 'body:before {
   filter: saturate(30%) opacity(80%);
 }'
 
