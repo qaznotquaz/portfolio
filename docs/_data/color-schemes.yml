@@ -1,10 +1,11 @@
 paper:
-  bg-1: '#666'
+  bg-1: '#575'
   bg-2: '#dca'
-  bg-3: '#975'
+  bg-3: '#ae5608'
   text-color: '#222'
-  acc-1: '#000'
+  acc-1: '#222'
   acc-2: '#000'
+  acc-3: '#ae5608'
   bg-img: 'paper.jpg'
   custom-scss: '#main-content:before {
   filter: saturate(30%) opacity(80%);

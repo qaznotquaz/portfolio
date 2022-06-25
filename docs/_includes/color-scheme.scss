@@ -7,6 +7,12 @@ $text-color: {{ cscheme.text-color }};
 $acc-1: {{ cscheme.acc-1 }};
 $acc-2: {{ cscheme.acc-2 }};
 
+{% if cscheme.acc-3 %}
+  $acc-3: {{ cscheme.acc-3 }};
+{% else %}
+  $acc-3: {{ cscheme.acc-2 }};
+{% endif %}
+
 {% if cscheme.bg-img %}
   $bg-img: '{{ '../images/' | append: cscheme.bg-img }}';
 {% endif %}

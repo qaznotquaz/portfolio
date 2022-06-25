@@ -46,7 +46,10 @@ html {
 
 :root { font-family: $font; }
 
-// strip text decoration based on visitation from links
+/* strip text decoration based on visitation from links. because i use icon buttons in quite a few places,
+    and because i want more control over the presentation of links within text, this makes the formatting
+    for all of that much cleaner.
+*/
 a {
   &:link {
     text-decoration: none;
@@ -295,29 +298,45 @@ body {
     color: $text-color;
   }
 
-  p {
-    margin-top: 0;
-  }
-
   /* where reasonable, i like to color italicized and bolded text because
       i find it makes walls of text much easier to read. many people
       disprefer this, however, because it can be distracting. for now,
       the color scheme simply doesn't differentiate much between the two.
       in the future, i intend to set up a simple client settings cookie
       so that users can decide whether or not they would like this. */
-  i, em {
+  i:not(.fa, .fab), em {
     color: $acc-1;
   }
   b, strong {
     color: $acc-2;
   }
 
+  a {
+    color: $acc-1;
+    font-weight: bold;
+
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      color: $bg-3;
+    }
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  hr {
+    color: transparent;
+    border: 1px solid $bg-3;
+    margin: 24px 0 16px;
+  }
+
   // the title strip at the top of the document, as well as the github icon on the right.
   #title {
-    //display: flex;
-    //align-items: center;
-    //height: 58px;
-
     padding: 12px 0 12px 16px;
     width: 100%;
     border: none;
@@ -327,6 +346,7 @@ body {
     font-size: $text-size-2*1.5;
     $title-color: $acc-2 !default;
     color: $title-color;
+    font-weight: bold;
 
     #github {
       position: relative;
