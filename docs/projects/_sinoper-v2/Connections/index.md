@@ -21,3 +21,5 @@ async bird_fact(secret: boolean | null = null): Promise<Document> {
 	return facts[0]
 }
 {% endhighlight %}
+
+{% include under-construction.html %}

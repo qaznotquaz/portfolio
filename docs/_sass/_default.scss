@@ -16,6 +16,18 @@ $text-size-1: $default-text-size-1 !default;
 $text-size-2: $default-text-size-2 !default;
 $section-bg: $bg-2 !default;
 
+@mixin square($side-length) {
+  height: $side-length;
+  width: $side-length;
+}
+
+@mixin transition($value: all 0.2s ease-in-out) {
+  -moz-transition: $value;
+  -o-transition: $value;
+  -webkit-transition: $value;
+  transition: $value;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -92,9 +104,10 @@ body {
 #sidebar {
   font-family: Ubuntu, sans-serif;
   background: $section-bg;
-  transition: width 0.2s ease-in-out;
   border-right: 4px solid $acc-1;
   width: 0;
+
+  @include transition;
 
   &.closed {
     // the arrow button will tug out a bit when hovered
@@ -137,8 +150,7 @@ body {
 
     background-color: $bg-2;
     border: 4px solid $acc-1;
-    height: 44px;
-    width: 44px;
+    @include square(44px);
     right: -100%;
 
     font-size: 19pt;
@@ -149,20 +161,14 @@ body {
     display: flex;
     align-items: center;
 
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    @include transition;
 
     /* this i tag specifically refers to a font-awesome icon contained
         within this element. */
     i {
       margin: auto 0 auto auto;
 
-      -moz-transition: all 0.2s ease-in-out;
-      -o-transition: all 0.2s ease-in-out;
-      -webkit-transition: all 0.2s ease-in-out;
-      transition: all 0.2s ease-in-out;
+      @include transition;
     }
   }
 
@@ -237,16 +243,12 @@ body {
 
       // link element must be relative so that it can be shunted on and off screen correctly.
       a {
-        height: 100%;
-        width: 100%;
+        @include square(100%);
         border-left: 4px solid $bg-3;
         position: relative;
         padding: 9px;
 
-        -moz-transition: all 0.2s ease-in-out;
-        -o-transition: all 0.2s ease-in-out;
-        -webkit-transition: all 0.2s ease-in-out;
-        transition: all 0.2s ease-in-out;
+        @include transition;
 
         &:hover {
           border-color: $bg-1;
@@ -297,8 +299,7 @@ body {
       align-items: center;
       background-color: $bg-2;
       border: 4px solid $acc-1;
-      height: 44px;
-      width: 44px;
+      @include square(44px);
       margin-right: -4px;
 
       &.active {
@@ -307,18 +308,12 @@ body {
       }
 
       &.inactive {
-        -moz-transition: all 0.2s ease-in-out;
-        -o-transition: all 0.2s ease-in-out;
-        -webkit-transition: all 0.2s ease-in-out;
-        transition: all 0.2s ease-in-out;
+        @include transition;
 
         i {
           color: $bg-3;
 
-          -moz-transition: all 0.2s ease-in-out;
-          -o-transition: all 0.2s ease-in-out;
-          -webkit-transition: all 0.2s ease-in-out;
-          transition: all 0.2s ease-in-out;
+          @include transition;
         }
 
         &:hover {
@@ -339,8 +334,7 @@ body {
         flex-direction: column;
         padding-top: 9px;
         align-items: center;
-        width: 100%;
-        height: 100%;
+        @include square(100%);
 
         i {
           margin: 0 auto;
@@ -353,18 +347,33 @@ body {
 // this is the div containing the page title and content.
 #content-page {
   background-color: $bg-2;
-  border-top: 4px solid $acc-1;
-  border-left: 4px solid $acc-1;
+  border: {
+    top: 4px solid $acc-1;
+    left: 4px solid $acc-1;
+  }
   margin: -4px 0 0 18px;
   height: 100%;
 
-  text-align: justify;
-  text-justify: inter-word;
+  text: {
+    align: justify;
+    justify: inter-word;
+  }
 
   div {
     padding: 18px 18px 0;
     font-size: $text-size-1;
     color: $text-color;
+  }
+
+  .under-construction {
+    padding: 9px;
+    position: absolute;
+    background-color: $bg-2;
+    border: 3px solid $bg-3;
+    transform: rotate(-1deg);
+    margin-top: 12px;
+    line-height: 30px;
+    font-size: 10pt;
   }
 
   /* where reasonable, i like to color italicized and bolded text because
@@ -384,13 +393,13 @@ body {
   a {
     color: $bg-3;
     font-weight: bold;
-    text-decoration: underline;
-    text-decoration-color: $bg-1;
 
-    -moz-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
-    -webkit-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
+    text: {
+      decoration: underline;
+      decoration-color: $bg-1;
+    }
+
+    @include transition(all 0.1s ease-in-out);
 
     &:hover {
       color: $bg-1;
@@ -412,14 +421,15 @@ body {
         margin: auto;
         color: $bg-3;
 
-        -moz-transition: all 0.1s ease-in-out;
-        -o-transition: all 0.1s ease-in-out;
-        -webkit-transition: all 0.1s ease-in-out;
-        transition: all 0.1s ease-in-out;
+        @include transition(all 0.1s ease-in-out);
+      }
+
+      i.fas.fa-tools {
+        color: $bg-1;
       }
 
       &:hover {
-        i.fas {
+        i.fa-link {
           color: $bg-1;
         }
       }
@@ -433,18 +443,13 @@ body {
   }
 
   // layout arrangement for code blocks
-  .highlight {
+  .highlight, code {
     margin: 0 auto;
-    padding-left: 16px;
+    padding: 1px 3px;
     overflow-x: scroll;
     max-width: 70vw;
-    background-color: rgba(#ed6, 0.3);
+    background-color: rgba($bg-1, 0.5);
     border-radius: 4px;
-
-    pre {
-      code {
-      }
-    }
   }
 
   // the title strip at the top of the document, as well as the github icon on the right.
@@ -465,16 +470,12 @@ body {
       float: right;
       background-color: #ed6;
       border: 3px solid $bg-3;
-      height: 48px;
-      width: 48px;
+      @include square(48px);
       transform: rotate(15deg);
       margin-top: 4px;
       margin-right: 14px;
 
-      -moz-transition: all 0.2s ease-in-out;
-      -o-transition: all 0.2s ease-in-out;
-      -webkit-transition: all 0.2s ease-in-out;
-      transition: all 0.2s ease-in-out;
+      @include transition;
 
       &:hover {
         border: 3px solid $acc-2;
@@ -489,17 +490,13 @@ body {
         display: flex;
         align-items: center;
 
-        height: 100%;
-        width: 100%;
+        @include square(100%);
 
         i {
           margin: auto;
           color: $bg-3;
 
-          -moz-transition: all 0.2s ease-in-out;
-          -o-transition: all 0.2s ease-in-out;
-          -webkit-transition: all 0.2s ease-in-out;
-          transition: all 0.2s ease-in-out;
+          @include transition;
         }
       }
     }
