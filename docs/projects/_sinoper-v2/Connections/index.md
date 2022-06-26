@@ -10,7 +10,7 @@ Sinoper's Connections are individual classes and libraries that extend his capab
 
 Below is an unrelated sample code snippet.
 
-{% highlight javascript %}
+```javascript
 /**
  * Generates one random bird fact.
  * @param {boolean | null} secret - Whether to force or avoid facts from the 'secret' list. When null, allows both secret and non-secret facts.
@@ -20,6 +20,6 @@ async bird_fact(secret: boolean | null = null): Promise<Document> {
 	const facts = await this.bird_facts(1, secret)
 	return facts[0]
 }
-{% endhighlight %}
+```
 
 {% include under-construction.html %}

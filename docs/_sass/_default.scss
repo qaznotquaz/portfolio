@@ -359,7 +359,7 @@ body {
     justify: inter-word;
   }
 
-  div {
+  div:not(.highlighter-rouge, .highlight) {
     padding: 18px 18px 0;
     font-size: $text-size-1;
     color: $text-color;
@@ -443,13 +443,26 @@ body {
   }
 
   // layout arrangement for code blocks
-  .highlight, code {
-    margin: 0 auto;
-    padding: 1px 3px;
+  code {
+    height: 100%;
+    width: auto;
+    margin: 0;
+    padding: 9px;
+
+    // lines of code can get pretty long! this makes sure that the page itself doesn't get horizontally stretched out.
     overflow-x: scroll;
-    max-width: 70vw;
-    background-color: rgba($bg-1, 0.5);
+    max-width: calc(100vw - 79px);
+
+
+    float: left;
+    background-color: #404040;
     border-radius: 4px;
+
+    .dl {
+      color: #ed9d13
+    }
+
+    tab-size: 2em;
   }
 
   // the title strip at the top of the document, as well as the github icon on the right.
