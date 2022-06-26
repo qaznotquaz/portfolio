@@ -17,6 +17,9 @@ collections:
   storyteller:
     output: true
     sort_by: index
+  genomics:
+    output: true
+    sort_by: index
 
 collections_dir: projects
 

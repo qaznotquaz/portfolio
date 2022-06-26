@@ -259,11 +259,108 @@ body {
   }
 }
 
-// this column has the top-nav stacked upon the page's title and contents.
+// the presentation of the github link at the top, and the social media links at the bottom.
+// they're meant to appear like post-it notes placed on the document.
+.post-it {
+  position: absolute;
+  bottom: 0;
+  background-color: #ed6;
+  border: 3px solid $bg-3;
+  @include square(48px);
+
+  // min-height is included to make sure that the object doesn't flex itself down
+  min-height: 48px;
+
+  @include transition;
+
+  &:hover {
+    border: 3px solid $bg-1;
+
+    a i {
+      color: $bg-1;
+    }
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+
+    @include square(100%);
+
+    i {
+      margin: auto;
+      color: $bg-3;
+
+      @include transition;
+    }
+  }
+
+}
+
+// this column has the top-nav stacked upon the page's title, then main content, then the post-it note footer.
 #content-column {
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  /* this provides the post-it notes at the bottom of the screen a consistent spot to
+    position themselves from, and keeps them from causing the boundaries of the screen
+    to overflow inconsistently. */
+  #post-its {
+    position: relative;
+    margin-bottom: 12px;
+
+    #email {
+      right: 120px;
+      transform: rotate(3deg);
+
+      a i {
+        font-size: 15pt;
+      }
+    }
+
+    #github-profile {
+      right: 80px;
+      transform: rotate(7deg);
+
+      a i {
+        font-size: 18pt;
+      }
+    }
+
+    #twitch {
+      right: 40px;
+      transform: rotate(5deg);
+
+      a i {
+        font-size: 18pt;
+      }
+    }
+
+    #last-edited {
+      left: 40px;
+      bottom: 12px;
+      transform: rotate(-0.3deg);
+      font-size: 10pt;
+
+      width: auto;
+      height: unset;
+      min-height: unset;
+      padding: 6px;
+
+      a i {
+        margin-left: 2px;
+      }
+
+      &:hover {
+        border: 3px solid $bg-3;
+
+        a i {
+          color: $bg-3;
+        }
+      }
+    }
+  }
 }
 
 // this is the navigation bar at the top with tabs representative of each project.
@@ -292,6 +389,7 @@ body {
 
     // a tab in the list
     li {
+      @include square(44px);
       position: relative;
       z-index: 1;
 
@@ -299,29 +397,30 @@ body {
       align-items: center;
       background-color: $bg-2;
       border: 4px solid $acc-1;
-      @include square(44px);
       margin-right: -4px;
+
+      @include transition;
+
+      i {
+        color: $bg-3;
+
+        @include transition;
+      }
+
+      &:hover {
+        height: 48px;
+
+        i {
+          color: $bg-1;
+        }
+      }
 
       &.active {
         height: 48px;
         border-bottom: 0;
-      }
-
-      &.inactive {
-        @include transition;
 
         i {
-          color: $bg-3;
-
-          @include transition;
-        }
-
-        &:hover {
-          height: 48px;
-
-          i {
-            color: $bg-1;
-          }
+          color: $text-color;
         }
       }
 
@@ -347,11 +446,8 @@ body {
 // this is the div containing the page title and content.
 #content-page {
   background-color: $bg-2;
-  border: {
-    top: 4px solid $acc-1;
-    left: 4px solid $acc-1;
-  }
-  margin: -4px 0 0 18px;
+  border: 4px solid $acc-1;
+  margin: -4px 18px 36px;
   height: 100%;
 
   text: {
@@ -417,7 +513,7 @@ body {
       margin-right: 9px;
 
       i.fas {
-        font-size: 30px;
+        font-size: 27px;
         margin: auto;
         color: $bg-3;
 
@@ -464,6 +560,12 @@ body {
     tab-size: 2em;
   }
 
+  code.language-plaintext {
+    display: inline;
+    background-color: rgba($bg-1, 0.4);
+    padding: 0 3px;
+  }
+
   div.highlighter-rouge div.highlight pre.highlight {
     border-radius: 4px;
   }
@@ -481,39 +583,15 @@ body {
     color: $title-color;
     font-weight: bold;
 
+    // positioning the github repository note correctly at the top corner
     #github {
       position: relative;
+      top: 4px;
+      right: 14px;
       float: right;
-      background-color: #ed6;
-      border: 3px solid $bg-3;
-      @include square(48px);
       transform: rotate(15deg);
-      margin-top: 4px;
-      margin-right: 14px;
-
-      @include transition;
-
-      &:hover {
-        border: 3px solid $acc-2;
-        transform: rotate(5deg);
-
-        a i {
-          color: $acc-2;
-        }
-      }
-
       a {
-        display: flex;
-        align-items: center;
-
-        @include square(100%);
-
-        i {
-          margin: auto;
-          color: $bg-3;
-
-          @include transition;
-        }
+        text-decoration: none;
       }
     }
   }

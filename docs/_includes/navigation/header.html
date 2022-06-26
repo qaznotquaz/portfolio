@@ -7,7 +7,6 @@
 			    {% assign slash_coll= '/' | append: page.collection %}
 				{% if tab.folder == slash_coll %}
 				    {% assign classes = 'active' %}
-				    {% assign href = '' %}
 				{% else %}
 				    {% assign classes = 'inactive' %}
 				{% endif %}
@@ -16,7 +15,7 @@
 				    {% assign classes=classes | append: ' home-tab' %}
 				{% endif %}
 				<li class="{{ classes }}">
-					<a{{ href }}>
+					<a{{ href }} title="{{ tab.name }}">
 				       <i class='fas {{ tab.icon }}'></i>
 					</a>
 				</li>

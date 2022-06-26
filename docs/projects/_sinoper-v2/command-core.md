@@ -3,6 +3,7 @@ layout: article
 title: Command Core
 color-scheme: paper
 index: 1
+last-edited: 6/25/2022
 ---
 
 This is the central core of Sinoper which performs all of the handling of commands. It accepts inputs from Twitch IRC, Discord, Spotify *(unimplemented)*, and MIDI, parses those inputs into commands, and then makes sure the requisite action is performed.

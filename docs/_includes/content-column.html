@@ -4,8 +4,8 @@
         <div id="title">
             {{ page.title }}
             {% if page.github %}
-                <span id="github">
-                    <a href={{ page.github }} target="_blank" rel="noopener noreferrer">
+                <span id="github" class="post-it">
+                    <a href={{ page.github }} target="_blank" rel="noopener noreferrer" title="see the source code on Github!">
                         <i class="fab fa-github-square"></i>
                     </a>
                 </span>
@@ -15,4 +15,24 @@
             {{ content }}
         </div>
     </div>
+    <span id='post-its'>
+        <span id="twitch" class="post-it">
+                <a href="https://twitch.tv/qaznotquaz" target="_blank" rel="noopener noreferrer" title="Watch me live on Twitch!">
+                    <i class="fab fa-twitch"></i>
+                </a>
+            </span>
+        <span id="github-profile" class="post-it">
+            <a href="https://github.com/qaznotquaz" target="_blank" rel="noopener noreferrer" title="View my GitHub profile!">
+                <i class="fab fa-github"></i>
+            </a>
+        </span>
+        <span id="email" class="post-it">
+            <a href="mailto:jess@sinoper.dev?subject=Portfolio" title="Email me at jess@sinoper.dev!">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </span>
+        <span id="last-edited" class="post-it">
+            <a>This page was last edited on <i>{{ page.last-edited }}</i></a>
+        </span>
+    </span>
 </div>
