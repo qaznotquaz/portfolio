@@ -359,7 +359,7 @@ body {
     justify: inter-word;
   }
 
-  div:not(.highlighter-rouge, .highlight) {
+  #main-content {
     padding: 18px 18px 0;
     font-size: $text-size-1;
     color: $text-color;
@@ -444,6 +444,7 @@ body {
 
   // layout arrangement for code blocks
   code {
+    display: block;
     height: 100%;
     width: auto;
     margin: 0;
@@ -453,8 +454,6 @@ body {
     overflow-x: scroll;
     max-width: calc(100vw - 79px);
 
-
-    float: left;
     background-color: #404040;
     border-radius: 4px;
 
@@ -463,6 +462,10 @@ body {
     }
 
     tab-size: 2em;
+  }
+
+  div.highlighter-rouge div.highlight pre.highlight {
+    border-radius: 4px;
   }
 
   // the title strip at the top of the document, as well as the github icon on the right.
