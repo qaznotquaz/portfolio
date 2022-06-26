@@ -607,13 +607,25 @@ body {
 @-moz-document url-prefix() {
 }
 
-/* once i return to fixing the layout, these will provide a threshold around which
-    to accommodate for phone screens. */
-@media screen and (max-width: 700px) {
+/* the 'last edited' post-it note needs to be made more space-efficient on smaller
+    screens so as not to overlap with the other post-its */
+@media screen and (min-width: 490px) {
+  #last-edited {
+    a:before{
+      content: "This page was last edited on "
+    }
+  }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (max-width: 490px) {
+  #last-edited {
+    a:before{
+      content: "Last edit: "
+    }
+  }
 }
+
+
 
 /* because i'm testing with different color schemes, and not all such schemes include
     background images, i only want to define a background image if the scheme called
