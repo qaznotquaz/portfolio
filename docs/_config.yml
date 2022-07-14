@@ -1,7 +1,6 @@
 url: "https://portfolio.sinoper.dev"
 title: "Jess' Portfolio"
 description: '[wip]'
-destination: '../site'
 
 collections:
   sinoper-v1:
