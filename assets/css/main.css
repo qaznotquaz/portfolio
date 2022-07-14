@@ -3046,28 +3046,35 @@ a:active { text-decoration: none; color: inherit; }
 body { position: relative; background: #575; margin: 0; min-height: 100vh; width: 100%; }
 body.closed #sidebar { left: calc(-1 * var(--sidebar-width)); }
 body.closed #sidebar #arrow-button:hover { width: calc(var(--sidebar-width) + 44px); }
+body.closed #sidebar #documents li.sidebar-title { height: 0; }
+body.closed #sidebar #documents li#manila-folder { transform: rotate(20deg); }
 body.closed #content-column { margin-left: 0; }
 body.open #sidebar { left: 0; }
 body.open #sidebar #arrow-button { width: calc(var(--sidebar-width) - 9px); }
 body.open #sidebar #arrow-button i { transform: rotate(180deg) translateY(-1px); }
 body.open #sidebar #arrow-button:hover { width: calc(var(--sidebar-width) - 13px); }
 
-#sidebar { font-family: Ubuntu, sans-serif; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(1px); width: var(--sidebar-width); height: 100%; position: absolute; z-index: 2; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; }
+#sidebar { font-family: Ubuntu, sans-serif; background: rgba(255, 255, 255, 0.6); width: var(--sidebar-width); height: 100%; position: absolute; z-index: 2; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; }
 #sidebar #arrow-button { position: relative; cursor: pointer; background-color: #dca; border: 4px solid #222; height: 44px; width: calc(100% + 40px); font-size: 19pt; margin-top: 9px; padding-right: 9px; padding-left: 12px; border-left: 0; display: flex; align-items: center; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; /* this i tag specifically refers to a font-awesome icon contained within this element. */ }
 #sidebar #arrow-button i { margin: auto 0 auto auto; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; }
 #sidebar #arrow-button span { position: relative; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; }
-#sidebar ul { list-style-type: none; padding: 0; display: flex; flex-direction: column; align-items: flex-start; width: auto; gap: 0; }
-#sidebar ul li { padding: 9px; margin-top: 8px; font-size: 14pt; font-weight: normal; width: auto; align-items: flex-start; white-space: nowrap; }
-#sidebar ul li.category a { border-bottom: 4px solid #ae5608; }
-#sidebar ul li.indent a { margin-left: 40px; }
-#sidebar ul li.active { font-weight: bold; }
-#sidebar ul li.active a { border-left: 6px solid #575; }
-#sidebar ul li.active.category a { border-bottom: 4px solid #575; }
-#sidebar ul li.inactive { text-decoration: underline; text-decoration-color: #575; text-decoration-thickness: 1.5px; }
-#sidebar ul li#sidebar-title a { border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 4px solid #ae5608; font-weight: bold; font-size: 16pt; }
-#sidebar ul li#sidebar-title a:hover { color: #222; }
-#sidebar ul li a { height: 100%; width: 100%; border-left: 4px solid #ae5608; position: relative; padding: 9px; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; }
-#sidebar ul li a:hover { border-color: #575; color: #575; }
+#sidebar #documents { position: fixed; list-style-type: none; padding: 0; display: flex; flex-direction: column; align-items: flex-start; width: var(--sidebar-width); gap: 0; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; }
+#sidebar #documents div.paper-sheet { width: 153px; height: 198px; background-color: #dca; border: 4px solid black; position: absolute; }
+#sidebar #documents li.sidebar-title, #sidebar #documents li#manila-folder { position: relative; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; margin-left: auto; margin-right: auto; font-size: 12pt; font-weight: normal; }
+#sidebar #documents li.sidebar-title.active, #sidebar #documents li#manila-folder.active { font-weight: bold; transform: rotate(7deg) translateX(10px); }
+#sidebar #documents li.sidebar-title.active div, #sidebar #documents li#manila-folder.active div { border-color: #575; }
+#sidebar #documents li.sidebar-title.inactive, #sidebar #documents li#manila-folder.inactive { text-decoration: underline; text-decoration-color: #575; text-decoration-thickness: 1.5px; }
+#sidebar #documents li.sidebar-title#manila-folder #folder-1, #sidebar #documents li.sidebar-title#manila-folder #folder-2, #sidebar #documents li#manila-folder#manila-folder #folder-1, #sidebar #documents li#manila-folder#manila-folder #folder-2 { height: 153px; width: 198px; background-color: #ed6; border: 4px solid black; position: absolute; }
+#sidebar #documents li.sidebar-title#manila-folder #folder-1, #sidebar #documents li#manila-folder#manila-folder #folder-1 { transform: rotate(70deg) translateY(120px); padding: 4px; }
+#sidebar #documents li.sidebar-title#manila-folder #folder-2, #sidebar #documents li#manila-folder#manila-folder #folder-2 { transform: rotate(70deg) translateY(120px) skew(10deg) translateX(-14px); z-index: -1; }
+#sidebar #documents li.sidebar-title#manila-folder a, #sidebar #documents li#manila-folder#manila-folder a { border: none; font-weight: bold; font-size: 16pt; }
+#sidebar #documents li.sidebar-title#manila-folder a:hover, #sidebar #documents li#manila-folder#manila-folder a:hover { color: #222; }
+#sidebar #documents li.sidebar-title div.sheet-contents, #sidebar #documents li#manila-folder div.sheet-contents { width: 145px; position: relative; top: 3px; left: 4px; display: block; }
+#sidebar #documents li.sidebar-title div.sheet-contents #toc, #sidebar #documents li#manila-folder div.sheet-contents #toc { list-style-type: none; width: 145px; font-weight: normal; font-size: 12px; padding: 0; }
+#sidebar #documents li.sidebar-title div.sheet-contents #toc li a, #sidebar #documents li#manila-folder div.sheet-contents #toc li a { border-bottom: 1px solid #222; padding: 2px; }
+#sidebar #documents li.sidebar-title div.sheet-contents #toc li a:hover, #sidebar #documents li#manila-folder div.sheet-contents #toc li a:hover { border-color: #575; color: #575; }
+#sidebar #documents li.sidebar-title div.sheet-contents a, #sidebar #documents li#manila-folder div.sheet-contents a { border-bottom: 2px solid #ae5608; width: 100%; display: block; padding: 5px; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; }
+#sidebar #documents li.sidebar-title div.sheet-contents a:hover, #sidebar #documents li#manila-folder div.sheet-contents a:hover { border-color: #575; color: #575; }
 
 .post-it { position: absolute; bottom: 0; background-color: #ed6; border: 3px solid #ae5608; height: 48px; width: 48px; min-height: 48px; -moz-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; }
 .post-it:hover { border: 3px solid #575; }
@@ -3129,7 +3136,7 @@ body.open #sidebar #arrow-button:hover { width: calc(var(--sidebar-width) - 13px
 @media (min-width: 581px) and (max-width: 680px) { .closed #last-edited a:before { content: "This page was last edited on "; }
   .open #last-edited a:before { content: "Last edit: "; } }
 /* this makes the sidebar able to either sit next to the main content on wide enough screens, or cover over it on thinner screens */
-@media (min-width: 581px) { #sidebar { background: transparent; backdrop-filter: unset; }
+@media (min-width: 581px) { #sidebar { background: transparent; }
   #content-column { margin-left: calc(var(--sidebar-width) - 48px); } }
 @media (max-width: 580px) { :root { --sidebar-width: calc(100vw - 17px); } }
 /* because i'm testing with different color schemes, and not all such schemes include background images, i only want to define a background image if the scheme called for it. */

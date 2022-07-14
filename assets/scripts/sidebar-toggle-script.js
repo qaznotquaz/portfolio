@@ -1,85 +1,68 @@
 function collapse(e) {
-    // get the width of the element's inner content, regardless of its actual size
-    const width = e.scrollWidth;
+    // get the height of the element's inner content, regardless of its actual size
+    let height = e.querySelector('.sheet-contents').scrollHeight + 10;
 
     // temporarily disable all css transitions
     const elementTransition = e.style.transition;
     e.style.transition = '';
 
     // on the next frame (as soon as the previous style change has taken effect),
-    // explicitly set the element's width to its current pixel width, so we
+    // explicitly set the element's height to its current pixel width, so we
     // aren't transitioning out of 'auto'
     requestAnimationFrame(function () {
-        e.style.width = width + 'px';
+        e.style.height = height + 'px';
         e.style.transition = elementTransition;
 
         // on the next frame (as soon as the previous style change has taken effect),
         // have the element transition to width: 0
         requestAnimationFrame(function () {
-            e.style.width = null;
+            e.style.height = '0px';
         });
     });
 }
 
 function expand(e) {
     requestAnimationFrame(function () {
-        const width = e.scrollWidth;
-        e.style.width = width + 'px';
+        let height = e.querySelector('.sheet-contents').scrollHeight + 10;
+
+        e.style.height = height + 'px';
     });
 }
 
-function expandSwatch() {
-    const e = this;
+// true: rotate to random. false: unset
+function rotate_each(list, toggle) {
+    let random;
 
-    e.innerHTML = e.getAttribute('icon-text') + e.getAttribute('swatch-text')
+    for (let item of list) {
+        if (!(item.classList.contains('active') || item.id === 'manila-folder')) {
+            if (toggle) {
+                random = Math.floor((Math.random() * 15) - 10)
+            } else {
+                random = 0
+            }
 
-    expand(e);
-}
+            item.style.transform = `rotate(${random}deg) translateX(${random * 2}px)`
+        }
 
-function collapseSwatch() {
-    const e = this;
-
-    e.innerHTML = e.getAttribute('icon-text')
-
-    collapse(e);
+        if (toggle) {
+            expand(item)
+        } else {
+            collapse(item)
+        }
+    }
 }
 
 function toggleSidebar() {
     const body = document.body
-    const sidebar = document.getElementById('sidebar')
-    const cont_col = document.getElementById('content-column')
+    const doc_list = document.getElementById('documents').children
 
     if (body.className === 'closed') {
-        //expand(sidebar)
         body.className = 'open'
-
-
+        rotate_each(doc_list, true)
     } else {
         body.className = 'closed'
-        //collapse(sidebar)
+        rotate_each(doc_list, false)
     }
-
-    /*const urhere = document.getElementById('urhere')
-    const up = document.getElementById('elevator-up')
-    const dn = document.getElementById('elevator-down')
-
-    if (e.getAttribute('out') === 'yes') {
-        e.setAttribute('out', 'no');
-        up.style.height = null;
-        urhere.style.height = null;
-        dn.style.height = null;
-        dn.style.marginTop = null;
-        e.innerHTML = '<i class="fas fa-bars"></i>'
-
-    } else {
-        e.setAttribute('out', 'yes')
-        up.style.height = "50px";
-        urhere.style.height = "50px";
-        dn.style.height = "50px";
-        dn.style.marginTop = "-4px";
-        e.innerHTML = '<i class="fas fa-bars"></i> Nav-Menu'
-
-    }*/
 }
 
 document.getElementById('arrow-button').addEventListener('click', toggleSidebar);
