@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <title>Trivia</title>
+</head>
+
+<body class="closed">
+	<div id="sidebar">
+    <div id="arrow-button" title="toggle sidebar">
+        <span>Navigation (WIP)</span> <i class="fas fa-chevron-right"></i>
+    </div>
+    
+</div>
+
+	<div id="content-column"><header>
+	<div id="top-nav">
+		<ul>
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive home-tab">
+					<a href="/" title="Home">
+				       <i class='fas fa-home'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="active">
+					<a href="/sinoper-v1" title="Sinoper V.1">
+				       <i class='fas fa-feather-alt'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/sinoper-v2" title="Sinoper V.2">
+				       <i class='fas fa-crow'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/library" title="Library">
+				       <i class='fas fa-book'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/modding" title="Hades Modding">
+				       <i class='fas fa-code-branch'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/storyteller" title="Storyteller">
+				       <i class='fas fa-pen-fancy'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/genomics" title="Genomics Research">
+				       <i class='fas fa-dna'></i>
+					</a>
+				</li>
+				
+			
+		</ul>
+	</div>
+</header>
+<div id="content-page">
+        <div id="title">
+            Trivia
+            
+        </div>
+        <div id="main-content">
+            <p>Given Sinoper’s characterization as a very intelligent bird, I thought it apt to give him a decent repository of fun facts about birds (heretofore known as ‘bird facts’) that he can recite to both educate and entertain users. I took my time curating a list of forty-seven bird facts, making sure that they were not only <em>interesting</em> facts but also lesser-well-known ones. In addition to these, I added eight ‘secret bird facts’ which were more easter eggs than they were actual facts. Although V.1 doesn’t differentiate between the two, <a href="/sinoper-v2/Connections/mongo#bird-facts">V.2 does</a>!</p>
+
+<hr />
+
+<h1 id="implementation"><a href="#implementation"><i class="fas fa-link"></i></a>Implementation</h1>
+
+<p>Trivia is implemented as a <a href="../Modules"><code class="language-plaintext highlighter-rouge">ModuleWithElements&lt;String&gt;</code></a> which loads its data from a <a href="/assets/files/birdFacts.txt"><code class="language-plaintext highlighter-rouge">birdFacts.txt</code></a> file. It listens for any message matching the <a href="/sinoper-v1">regex pattern</a> <code class="language-plaintext highlighter-rouge">bir[db](?: ?facts?| trivia)</code> and will always respond immediately with a randomly-selected fact from the list. Additionally, there is some code to handle randomly selecting an <a href="info">emote</a> to make repeated requests for facts feel less stale.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">void</span> <span class="nf">birdFact</span><span class="o">(</span><span class="nc">MessageReceivedEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">fact</span> <span class="o">=</span> <span class="n">getRandom</span><span class="o">();</span>
+        <span class="kt">boolean</span> <span class="n">vibeCheck</span> <span class="o">=</span> <span class="n">fact</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"!"</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">face</span> <span class="o">=</span> <span class="n">vibeCheck</span> <span class="o">?</span> <span class="n">randEmote</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">randy</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">randEmote</span><span class="o">.</span><span class="na">size</span><span class="o">()))</span> <span class="o">:</span> <span class="s">""</span><span class="o">;</span>
+        <span class="n">respond</span><span class="o">(</span><span class="n">event</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"%s %s"</span><span class="o">,</span> <span class="n">fact</span><span class="o">,</span> <span class="n">face</span><span class="o">),</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(!</span><span class="n">vibeCheck</span><span class="o">){</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">2000</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">ignored</span><span class="o">){}</span>
+
+            <span class="n">respond</span><span class="o">(</span><span class="n">event</span><span class="o">,</span> <span class="s">":v"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>Of note, the <code class="language-plaintext highlighter-rouge">vibeCheck</code> flag is only raised for two facts: <code class="language-plaintext highlighter-rouge">i don't exist</code>, and <code class="language-plaintext highlighter-rouge">i will never die</code>. It’s for a bit of ominous humour - the lack of an exclamation point is extremely <a href="../#characterization">out of character</a>, and Sinoper leaves a two-second pause before following the statement with a flat <code class="language-plaintext highlighter-rouge">:v</code>.</p>
+
+        </div>
+    </div>
+    <span id='post-its'>
+        <span id="twitch" class="post-it">
+                <a href="https://twitch.tv/qaznotquaz" target="_blank" rel="noopener noreferrer" title="Watch me live on Twitch!">
+                    <i class="fab fa-twitch"></i>
+                </a>
+            </span>
+        <span id="github-profile" class="post-it">
+            <a href="https://github.com/qaznotquaz" target="_blank" rel="noopener noreferrer" title="View my GitHub profile!">
+                <i class="fab fa-github"></i>
+            </a>
+        </span>
+        <span id="email" class="post-it">
+            <a href="mailto:jess@sinoper.dev?subject=Portfolio" title="Email me at jess@sinoper.dev!">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </span>
+        <span id="last-edited" class="post-it">
+            <a><i>6/26/2022</i></a>
+        </span>
+    </span>
+</div>
+
+</body>
+<script src="/assets/scripts/sidebar-toggle-script.js"></script>
+</html>
