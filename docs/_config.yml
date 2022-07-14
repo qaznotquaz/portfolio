@@ -27,3 +27,5 @@ permalink: /:categories/:slug
 
 plugins:
   - jekyll-toc
+
+include: ['CNAME']

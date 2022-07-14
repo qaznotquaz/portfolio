@@ -5,6 +5,7 @@ color-scheme: paper
 category: Connections
 index: 6
 last-edited: 6/26/2022
+toc: true
 ---
 
 

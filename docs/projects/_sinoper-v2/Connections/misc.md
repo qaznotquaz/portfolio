@@ -5,8 +5,8 @@ color-scheme: paper
 category: Connections
 index: 7
 last-edited: 6/26/2022
+toc: true
 ---
-
 
 Not all connections are created equal - although most are fairly complicated, a few are compiled onto this page because they're simple enough to not need a whole page of their own.
 

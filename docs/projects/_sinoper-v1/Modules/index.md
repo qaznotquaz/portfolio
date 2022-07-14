@@ -5,8 +5,8 @@ color-scheme: paper
 category: Modules
 index: 2
 last-edited: 6/26/2022
+toc: true
 ---
-
 
 Features were grafted onto Sinoper V.1 as implementations of a `Module` interface.
 

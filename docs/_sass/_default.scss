@@ -113,6 +113,16 @@ body {
 
       // this moves sidebar off-screen to the left.
       left: calc(-1 * var(--sidebar-width));
+
+      #documents {
+        li.sidebar-title {
+          height: 0;
+        }
+
+        li#manila-folder {
+          transform: rotate(20deg);
+        }
+      }
     }
 
     #content-column {
@@ -147,7 +157,6 @@ body {
 #sidebar {
   font-family: Ubuntu, sans-serif;
   background: rgba(#fff, 0.6);
-  backdrop-filter: blur(1px);
   width: var(--sidebar-width);
   height: 100%;
   position: absolute;
@@ -193,51 +202,45 @@ body {
   }
 
   // this is the list which contains document titles/links
-  ul {
+  #documents {
+    position: fixed;
     list-style-type: none;
-    //margin-top: -52px;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: auto;
+    width: var(--sidebar-width);
     gap: 0;
+    @include transition;
 
-    li {
-      padding: 9px;
-      margin-top: 8px;
-      font-size: 14pt;
-      font-weight: normal;
-      width: auto;
+    div.paper-sheet {
+      width: 153px;
+      height: 198px;
+      background-color: $bg-2;
+      border: 4px solid black;
+      position: absolute;
+    }
 
-      align-items: flex-start;
-      white-space: nowrap;
+    li.sidebar-title, li#manila-folder {
+      position: relative;
+      @include transition;
 
-      &.category {
-        a {
-          border-bottom: 4px solid $bg-3;
-        }
+      margin: {
+        left: auto;
+        right: auto;
       }
 
-      &.indent {
-        a {
-          margin-left: 40px;
-        }
+      font: {
+        size: 12pt;
+        weight: normal;
       }
 
       &.active {
         font-weight: bold;
+        transform: rotate(7deg) translateX(10px);
 
-        a {
-          border-left: 6px solid $bg-1;
-        }
-
-        & {
-          &.category {
-            a {
-              border-bottom: 4px solid $bg-1;
-            }
-          }
+        div {
+          border-color: $bg-1;
         }
       }
 
@@ -247,11 +250,27 @@ body {
         text-decoration-thickness: 1.5px;
       }
 
-      &#sidebar-title {
+      &#manila-folder {
+        #folder-1, #folder-2 {
+          height: 153px;
+          width: 198px;
+          background-color: #ed6;
+          border: 4px solid black;
+          position: absolute;
+        }
+
+        #folder-1 {
+          transform: rotate(70deg) translateY(120px);
+          padding: 4px;
+        }
+
+        #folder-2 {
+          transform: rotate(70deg) translateY(120px) skew(10deg) translateX(-14px);
+          z-index: -1;
+        }
+
         a {
-          border-left: 4px solid transparent;
-          border-right: 4px solid transparent;
-          border-bottom: 4px solid $bg-3;
+          border: none;
           font-weight: bold;
           font-size: 16pt;
 
@@ -261,18 +280,42 @@ body {
         }
       }
 
-      // link element must be relative so that it can be shunted on and off screen correctly.
-      a {
-        @include square(100%);
-        border-left: 4px solid $bg-3;
+      div.sheet-contents {
+        width: 145px;
         position: relative;
-        padding: 9px;
+        top: 3px;
+        left: 4px;
+        display: block;
 
-        @include transition;
+        #toc {
+          list-style-type: none;
+          width: 145px;
+          font-weight: normal;
+          font-size: 12px;
+          padding: 0;
 
-        &:hover {
-          border-color: $bg-1;
-          color: $bg-1;
+          li a {
+            border-bottom: 1px solid $text-color;
+            padding: 2px;
+
+            &:hover {
+              border-color: $bg-1;
+              color: $bg-1;
+            }
+          }
+        }
+
+        a {
+          border-bottom: 2px solid $bg-3;
+          width: 100%;
+          display: block;
+          padding: 5px;
+          @include transition;
+
+          &:hover {
+            border-color: $bg-1;
+            color: $bg-1;
+          }
         }
       }
     }
@@ -663,7 +706,6 @@ body {
 @media (min-width: 581px) {
   #sidebar {
     background: transparent;
-    backdrop-filter: unset;
   }
 
   #content-column {

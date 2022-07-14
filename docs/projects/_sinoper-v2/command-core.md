@@ -4,6 +4,7 @@ title: Core and Structure
 color-scheme: paper
 index: 1
 last-edited: 6/26/2022
+toc: true
 ---
 
 

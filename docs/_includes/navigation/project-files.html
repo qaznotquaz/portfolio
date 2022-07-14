@@ -1,8 +1,10 @@
 {% assign collection=site.collections | where: "label", page.collection | first %}
 {% assign sorted=collection.docs | sort: "index" %}
 
-<ul>
-    <li id='sidebar-title'><a>Documents in Project</a></li>
+{% assign slash_coll= '/' | append: page.collection %}
+{% assign tab = site.data.banner-tabs['tabs'] | where: "folder", slash_coll | first %}
+
+<ul id='documents'>
     {% for entry in sorted %}
         {% if entry.title == page.title %}
             {% assign classes=' active' %}
@@ -10,23 +12,16 @@
             {% assign classes=' inactive' %}
         {% endif %}
 
-        {% if entry.category %}
-            {% if entry.title == entry.category %}
-                {% assign classes=classes | append: ' category' %}
-            {% else %}
-                {% assign classes=classes | append: ' indent' %}
+        <li class="sidebar-title{{ classes }}">
+            {% assign link='' | append: site.baseurl | append: entry.url %}
+            <div class="paper-sheet"></div>
+            <div class="sheet-contents">
+            <a href="{{ link }}">{{ entry.title }}</a>
+            {% if entry.title == page.title %}
+                {% toc %}
             {% endif %}
-        {% endif %}
-
-        {% if entry.title == page.title %}
-            <li class="sidebar-title{{ classes }} active">
-                <a>{{ entry.title }}</a>
-            </li>
-        {% else %}
-            <li class="sidebar-title{{ classes }} inactive">
-                {% assign link='' | append: site.baseurl | append: entry.url %}
-                <a href="{{ link }}">{{ entry.title }}</a>
-            </li>
-        {% endif %}
+            </div>
+        </li>
     {% endfor %}
+    <li id='manila-folder'><div id='folder-2'></div><div id='folder-1'><a>{{ tab['name'] }}</a></div></li>
 </ul>
