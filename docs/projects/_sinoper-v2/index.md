@@ -4,6 +4,7 @@ title: Sinoper V.2 / Assistant
 color-scheme: paper
 index: 0
 last-edited: 6/26/2022
+toc: true
 ---
 
 

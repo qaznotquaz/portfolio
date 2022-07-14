@@ -24,3 +24,6 @@ collections:
 collections_dir: projects
 
 permalink: /:categories/:slug
+
+plugins:
+  - jekyll-toc

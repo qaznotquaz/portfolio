@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <title>Miscellaneous</title>
+</head>
+
+<body class="closed">
+	<div id="sidebar">
+    <div id="arrow-button" title="toggle sidebar">
+        <span>Navigation (WIP)</span> <i class="fas fa-chevron-right"></i>
+    </div>
+    
+</div>
+
+	<div id="content-column"><header>
+	<div id="top-nav">
+		<ul>
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive home-tab">
+					<a href="/" title="Home">
+				       <i class='fas fa-home'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/sinoper-v1" title="Sinoper V.1">
+				       <i class='fas fa-feather-alt'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="active">
+					<a href="/sinoper-v2" title="Sinoper V.2">
+				       <i class='fas fa-crow'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/library" title="Library">
+				       <i class='fas fa-book'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/modding" title="Hades Modding">
+				       <i class='fas fa-code-branch'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/storyteller" title="Storyteller">
+				       <i class='fas fa-pen-fancy'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/genomics" title="Genomics Research">
+				       <i class='fas fa-dna'></i>
+					</a>
+				</li>
+				
+			
+		</ul>
+	</div>
+</header>
+<div id="content-page">
+        <div id="title">
+            Miscellaneous
+            
+        </div>
+        <div id="main-content">
+            <p>Not all connections are created equal - although most are fairly complicated, a few are compiled onto this page because they’re simple enough to not need a whole page of their own.</p>
+
+<hr />
+
+<h1 id="discord-connection"><a href="#discord-connection"><i class="fas fa-link"></i></a>Discord Connection</h1>
+
+<p>Sinoper uses this class to connect to Discord as a bot user. Once fully implemented, it will facilitate “conversation” and command input from users and servers there. Message events received here should be passed up to the <a href="../command-core">Core</a> for parsing, but Sinoper currently only has a very simple placeholder handler (shown below).</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">messageCreate</span><span class="dl">'</span><span class="p">,</span> <span class="k">async</span> <span class="nx">message</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span>
+		<span class="c1">// filter out messages from servers which aren't my testing server</span>
+		<span class="nx">message</span><span class="p">.</span><span class="nx">guildId</span> <span class="o">!==</span> <span class="nx">GuildID</span> <span class="o">||</span>
+
+		<span class="c1">// filter out messages from itself</span>
+		<span class="nx">message</span><span class="p">.</span><span class="nx">author</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="nx">ClientID</span>
+	<span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">content</span><span class="p">)</span>
+
+	<span class="c1">// a bird-themed 'pong' reply</span>
+	<span class="nx">message</span><span class="p">.</span><span class="nx">channel</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">chirp :V</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="midi-connection"><a href="#midi-connection"><i class="fas fa-link"></i></a>MIDI Connection</h1>
+
+<p>This connection serves to allow my MIDI piano to function as a makeshift stream deck - a control surface separate from the keyboard which automates various tasks. Some of such use cases include quickly put up polls in chat, using a preset group of stream settings for different games, and controlling the volume of the music. The first two <em>can</em> be done using keyboard hotkeys but could take up over a dozen key combinations, and the second wants an analog wheel. With piano keys and MIDI sliders at my disposal, these tasks become easy.</p>
+
+<p>That said, the implementation of the connection itself is a very simple wrapper for <a href="https://www.npmjs.com/package/midi">node-midi</a>’s Input class, and its entirety is shown below. Handling of commands generated by MIDI events is, of course, taken care of by the <a href="../command-core">Core</a>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Input</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">midi</span><span class="dl">'</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">SinoperMidi</span> <span class="kd">extends</span> <span class="nx">Input</span> <span class="p">{</span>
+	<span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">super</span><span class="p">()</span>
+
+		<span class="k">this</span><span class="p">.</span><span class="nx">openPort</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">ignoreTypes</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="spotify-connection"><a href="#spotify-connection"><i class="fas fa-link"></i></a>Spotify Connection</h1>
+
+<p>This connection is not implemented yet, but it’s how Sinoper is going to interact with the stream’s background music. I stream music from Spotify and like to display the currently playing track on the <a href="overlay#overlay-client">overlay</a>, and I also like to be able to easily adjust the volume during the stream for a number of reasons. To facilitate this, this connection will regularly query Spotify to get the current song and generate events to pass up to the <a href="../command-core">Core</a>, and have methods to handle the boilerplate for calls to set the volume and such.</p>
+
+        </div>
+    </div>
+    <span id='post-its'>
+        <span id="twitch" class="post-it">
+                <a href="https://twitch.tv/qaznotquaz" target="_blank" rel="noopener noreferrer" title="Watch me live on Twitch!">
+                    <i class="fab fa-twitch"></i>
+                </a>
+            </span>
+        <span id="github-profile" class="post-it">
+            <a href="https://github.com/qaznotquaz" target="_blank" rel="noopener noreferrer" title="View my GitHub profile!">
+                <i class="fab fa-github"></i>
+            </a>
+        </span>
+        <span id="email" class="post-it">
+            <a href="mailto:jess@sinoper.dev?subject=Portfolio" title="Email me at jess@sinoper.dev!">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </span>
+        <span id="last-edited" class="post-it">
+            <a><i>6/26/2022</i></a>
+        </span>
+    </span>
+</div>
+
+</body>
+<script src="/assets/scripts/sidebar-toggle-script.js"></script>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <title>MongoDB Memory</title>
+</head>
+
+<body class="closed">
+	<div id="sidebar">
+    <div id="arrow-button" title="toggle sidebar">
+        <span>Navigation (WIP)</span> <i class="fas fa-chevron-right"></i>
+    </div>
+    
+</div>
+
+	<div id="content-column"><header>
+	<div id="top-nav">
+		<ul>
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive home-tab">
+					<a href="/" title="Home">
+				       <i class='fas fa-home'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/sinoper-v1" title="Sinoper V.1">
+				       <i class='fas fa-feather-alt'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="active">
+					<a href="/sinoper-v2" title="Sinoper V.2">
+				       <i class='fas fa-crow'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/library" title="Library">
+				       <i class='fas fa-book'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/modding" title="Hades Modding">
+				       <i class='fas fa-code-branch'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/storyteller" title="Storyteller">
+				       <i class='fas fa-pen-fancy'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/genomics" title="Genomics Research">
+				       <i class='fas fa-dna'></i>
+					</a>
+				</li>
+				
+			
+		</ul>
+	</div>
+</header>
+<div id="content-page">
+        <div id="title">
+            MongoDB Memory
+            
+        </div>
+        <div id="main-content">
+            <p>Sinoper uses a MongoDB client to access its long term memory and store data for later. The collections being handled currently only include <a href="#bird-facts"><code class="language-plaintext highlighter-rouge">bird_facts</code></a> (a <a href="/sinoper-v1/Modules/trivia">much-beloved entertainment feature</a> from V.1) and <a href="#twitch-ids"><code class="language-plaintext highlighter-rouge">twitch_ids</code></a>, but several more are planned. That said, a simple free cluster in MongoDB’s cloud will be more than enough for the small-scale data I’m working with.</p>
+
+<p>The relevant connection is the <code class="language-plaintext highlighter-rouge">SinoperMongoDB</code> class, which extends a normal <code class="language-plaintext highlighter-rouge">MongoClient</code> and handles connecting to the Cloud as well as providing methods to take care of data retrieval.</p>
+
+<hr />
+
+<h1 id="bird-facts"><a href="#bird-facts"><i class="fas fa-link"></i></a>Bird Facts</h1>
+
+<p>Each document in this collection has two fields: a <code class="language-plaintext highlighter-rouge">value</code> field containing a bird fact string, and a <code class="language-plaintext highlighter-rouge">secret</code> field, which is a boolean denoting whether the fact is a normal bird fact or a ‘secret’ easter egg fact. To query one or more such facts, Sinoper uses the following code, which produces JSON documents. As of yet, a text command to request bird facts has not been implemented.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Generates a random list of bird facts.
+ * @param {number} count - How many facts to acquire.
+ * @param {boolean | null} secret - Whether to force or avoid facts from the 'secret' list. When null, allows both secret and non-secret facts.
+ * @return {Promise&lt;Document[]&gt;}
+ */</span>
+<span class="k">async</span> <span class="nx">bird_facts</span><span class="p">(</span><span class="nx">count</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">secret</span><span class="p">:</span> <span class="nx">boolean</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Document</span><span class="p">[]</span><span class="o">&gt;</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">memory</span><span class="p">)</span> <span class="k">throw</span> <span class="dl">'</span><span class="s1">MongoDB is not connected</span><span class="dl">'</span>
+
+	<span class="c1">// the bird_facts collection</span>
+	<span class="kd">const</span> <span class="nx">facts</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">memory</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="dl">'</span><span class="s1">bird_facts</span><span class="dl">'</span><span class="p">)</span>
+	<span class="kd">let</span> <span class="nx">cursor</span>
+
+	<span class="c1">// if we're not interested in filtering in or out secrets, we can just aggregate the entire collection.</span>
+	<span class="c1">// and, because we would like a random list, $sample works perfectly</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">secret</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">cursor</span> <span class="o">=</span> <span class="nx">facts</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([{</span> <span class="na">$sample</span><span class="p">:</span> <span class="p">{</span> <span class="na">size</span><span class="p">:</span> <span class="nx">count</span> <span class="p">}</span> <span class="p">}])</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="c1">// if we do want to filter secrets, it's nothing more than another stage in the pipeline.</span>
+		<span class="nx">cursor</span> <span class="o">=</span> <span class="nx">facts</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+			<span class="p">{</span> <span class="na">$match</span><span class="p">:</span> <span class="p">{</span> <span class="na">secret</span><span class="p">:</span> <span class="nx">secret</span> <span class="p">}</span> <span class="p">},</span>
+			<span class="p">{</span> <span class="na">$sample</span><span class="p">:</span> <span class="p">{</span> <span class="na">size</span><span class="p">:</span> <span class="nx">count</span> <span class="p">}</span> <span class="p">},</span>
+		<span class="p">])</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="k">await</span> <span class="nx">cursor</span><span class="p">.</span><span class="nx">toArray</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * Generates one random bird fact.
+ * @param {boolean | null} secret - Whether to force or avoid facts from the 'secret' list. When null, allows both secret and non-secret facts.
+ * @return {Promise&lt;Document&gt;}
+ */</span>
+<span class="k">async</span> <span class="nx">bird_fact</span><span class="p">(</span><span class="nx">secret</span><span class="p">:</span> <span class="nx">boolean</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Document</span><span class="o">&gt;</span> <span class="p">{</span>
+	<span class="kd">const</span> <span class="nx">facts</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">bird_facts</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">secret</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nx">facts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="twitch-ids"><a href="#twitch-ids"><i class="fas fa-link"></i></a>Twitch IDs</h1>
+
+<p>When making API calls to Twitch, there are quite a number of contexts that will require an ID string of some sort. For example, if I wanted to add the <code class="language-plaintext highlighter-rouge">Programming</code> tag to my stream through the API, I couldn’t simply use the string <code class="language-plaintext highlighter-rouge">'Programming'</code> - I would instead have to find out what the ID of the desired tag is (in this case, <code class="language-plaintext highlighter-rouge">a59f1e4e-257b-4bd0-90c7-189c3efbf917</code>) and use that in the API call. To improve readability and simplify finding and using the right ID, I have a document in this collection for each kind of ID I’ll be commonly referencing. Each document’s fields are used as key-value pairs, where the value is an ID for the API, and the key is a human-readable name for that ID.</p>
+
+<div class="under-construction"><h1><a><i class="fas fa-tools"></i></a>This page is still under construction.</h1></div>
+
+
+        </div>
+    </div>
+    <span id='post-its'>
+        <span id="twitch" class="post-it">
+                <a href="https://twitch.tv/qaznotquaz" target="_blank" rel="noopener noreferrer" title="Watch me live on Twitch!">
+                    <i class="fab fa-twitch"></i>
+                </a>
+            </span>
+        <span id="github-profile" class="post-it">
+            <a href="https://github.com/qaznotquaz" target="_blank" rel="noopener noreferrer" title="View my GitHub profile!">
+                <i class="fab fa-github"></i>
+            </a>
+        </span>
+        <span id="email" class="post-it">
+            <a href="mailto:jess@sinoper.dev?subject=Portfolio" title="Email me at jess@sinoper.dev!">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </span>
+        <span id="last-edited" class="post-it">
+            <a><i>6/26/2022</i></a>
+        </span>
+    </span>
+</div>
+
+</body>
+<script src="/assets/scripts/sidebar-toggle-script.js"></script>
+</html>

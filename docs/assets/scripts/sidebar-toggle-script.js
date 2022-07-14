@@ -45,17 +45,18 @@ function collapseSwatch() {
 }
 
 function toggleSidebar() {
-    const e = this;
+    const body = document.body
     const sidebar = document.getElementById('sidebar')
+    const cont_col = document.getElementById('content-column')
 
-    if (sidebar.className === 'closed') {
-        expand(sidebar)
-        sidebar.className = 'open'
+    if (body.className === 'closed') {
+        //expand(sidebar)
+        body.className = 'open'
 
 
     } else {
-        sidebar.className = 'closed'
-        collapse(sidebar)
+        body.className = 'closed'
+        //collapse(sidebar)
     }
 
     /*const urhere = document.getElementById('urhere')

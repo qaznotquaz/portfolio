@@ -1,37 +1,7 @@
-{% assign collection=site.collections | where: "label", page.collection | first %}
-{% assign sorted=collection.docs | sort: "index" %}
-
-<div id="sidebar" class="closed">
+<div id="sidebar">
     <div id="arrow-button" title="toggle sidebar">
-        <i class="fas fa-chevron-right"></i>
+        <span>Navigation (WIP)</span> <i class="fas fa-chevron-right"></i>
     </div>
-    <ul>
-        <li id='sidebar-title'><a>Documents in Project</a></li>
-        {% for entry in sorted %}
-            {% if entry.title == page.title %}
-                {% assign classes=' active' %}
-            {% else %}
-                {% assign classes=' inactive' %}
-            {% endif %}
-
-            {% if entry.category %}
-                {% if entry.title == entry.category %}
-                    {% assign classes=classes | append: ' category' %}
-                {% else %}
-                    {% assign classes=classes | append: ' indent' %}
-                {% endif %}
-            {% endif %}
-
-            {% if entry.title == page.title %}
-                <li class="sidebar-title{{ classes }} active">
-                    <a>{{ entry.title }}</a>
-                </li>
-            {% else %}
-                <li class="sidebar-title{{ classes }} inactive">
-                    {% assign link='' | append: site.baseurl | append: entry.url %}
-                    <a href="{{ link }}">{{ entry.title }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+    {% comment %}{% toc %}
+    {% include navigation/project-files.html %}{% endcomment %}
 </div>

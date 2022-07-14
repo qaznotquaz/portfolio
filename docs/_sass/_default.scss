@@ -15,6 +15,8 @@ $font: $default-font !default;
 $text-size-1: $default-text-size-1 !default;
 $text-size-2: $default-text-size-2 !default;
 $section-bg: $bg-2 !default;
+$track-color: lighten($bg-1, 15%);
+$thumb-color: $bg-1;
 
 @mixin square($side-length) {
   height: $side-length;
@@ -34,31 +36,36 @@ $section-bg: $bg-2 !default;
 
 /* affix scrollbar to the side of the screen, even when no scrolling is necessary.
     this is to keep the total width of the main body of the page consistent, since
-    i've had a number of behavioral issues caused by the scrollbar making that inconsistent */
+    i've had a number of behavioral issues caused by the scrollbar making that inconsistent.
+
+    we'll also be implementing this reskin for firefox in the body selector */
 html {
   overflow-y: scroll;
+  scrollbar-color: $thumb-color $track-color;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 17px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: $track-color;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: $thumb-color;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: lighten($bg-1, 35%);
 }
 
 // --- end affixing scrollbar ---
 
 :root {
   font-family: $font;
+
+  --sidebar-width: min(calc(100vw - 17px), 250px);
 }
 
 /* strip text decoration based on visitation from links. because i use icon buttons in quite a few places,
@@ -88,58 +95,65 @@ a {
 }
 
 
-// the main body is a row-oriented flexbox containing:
-//  1. the sidebar
-//  2. the content column
+// the main body is a row-oriented flexbox containing the sidebar and the content column.
+// when the sidebar button is toggled, the 'open' or 'closed' class goes to the body.
 body {
+  position: relative;
   background: $bg-1;
   margin: 0;
-  display: flex;
   min-height: 100vh;
   width: 100%;
-}
-
-// the sidebar has an arrow button which opens and collapses it, as well as a list of all
-//    pages related to the current project
-#sidebar {
-  font-family: Ubuntu, sans-serif;
-  background: $section-bg;
-  border-right: 4px solid $acc-1;
-  width: 0;
-
-  @include transition;
 
   &.closed {
-    // the arrow button will tug out a bit when hovered
-    #arrow-button:hover {
-      width: 48px;
+    #sidebar {
+      // the arrow button will tug out a bit when hovered
+      #arrow-button:hover {
+        width: calc(var(--sidebar-width) + 44px);
+      }
+
+      // this moves sidebar off-screen to the left.
+      left: calc(-1 * var(--sidebar-width));
     }
 
-    // this moves all the text from page links off-screen to the left.
-    // other solutions have issues because of overflow clipping and auto-sizing.
-    ul li a {
-      left: -110%;
+    #content-column {
+      margin-left: 0
     }
   }
 
   &.open {
-    // while open, the arrow will point the other direction.
-    #arrow-button {
-      i {
-        transform: rotate(180deg) translateY(-1px);
+    #sidebar {
+      // while open, the arrow will point the other direction.
+      #arrow-button {
+        width: calc(var(--sidebar-width) - 9px);
+
+        i {
+          transform: rotate(180deg) translateY(-1px);
+        }
+
+        // the arrow will push in a bit when hovered.
+        &:hover {
+          width: calc(var(--sidebar-width) - 13px);
+        }
       }
 
-      // the arrow will push in a bit when hovered.
-      &:hover {
-        width: 40px;
-      }
-    }
-
-    // this resets the text from page links back to where they should sit.
-    ul li a {
+      // this resets the elements of the sidebar back to where they should sit
       left: 0;
     }
   }
+}
+
+// the sidebar has an arrow button which opens and collapses it, as well as a table of contents for both
+//    the current category, and the current document within that category
+#sidebar {
+  font-family: Ubuntu, sans-serif;
+  background: rgba(#fff, 0.6);
+  backdrop-filter: blur(1px);
+  width: var(--sidebar-width);
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+
+  @include transition;
 
   // this button opens and closes the sidebar when clicked.
   #arrow-button {
@@ -150,12 +164,13 @@ body {
 
     background-color: $bg-2;
     border: 4px solid $acc-1;
-    @include square(44px);
-    right: -100%;
+    height: 44px;
+    width: calc(100% + 40px);
 
     font-size: 19pt;
     margin-top: 9px;
-    padding-right: 12px;
+    padding-right: 9px;
+    padding-left: 12px;
     border-left: 0;
 
     display: flex;
@@ -170,12 +185,17 @@ body {
 
       @include transition;
     }
+
+    span {
+      position: relative;
+      @include transition;
+    }
   }
 
   // this is the list which contains document titles/links
   ul {
     list-style-type: none;
-    margin-top: -52px;
+    //margin-top: -52px;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -301,7 +321,7 @@ body {
 #content-column {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  @include transition;
 
   /* this provides the post-it notes at the bottom of the screen a consistent spot to
     position themselves from, and keeps them from causing the boundaries of the screen
@@ -592,6 +612,7 @@ body {
       right: 14px;
       float: right;
       transform: rotate(15deg);
+
       a {
         text-decoration: none;
       }
@@ -604,29 +625,57 @@ body {
   }
 }
 
-/* if i decide to apply a backdrop filter, this will cover cases where the user
-  is using firefox since it doesn't currently fully support filters. */
-@-moz-document url-prefix() {
-}
-
 /* the 'last edited' post-it note needs to be made more space-efficient on smaller
     screens so as not to overlap with the other post-its */
-@media screen and (min-width: 490px) {
+@media (max-width: 490px) {
   #last-edited {
-    a:before{
-      content: "This page was last edited on "
-    }
-  }
-}
-
-@media screen and (max-width: 490px) {
-  #last-edited {
-    a:before{
+    a:before {
       content: "Last edit: "
     }
   }
 }
 
+@media (min-width: 491px) and (max-width: 580px), (min-width: 681px) {
+  #last-edited {
+    a:before {
+      content: "This page was last edited on "
+    }
+  }
+}
+
+// this is an awkward range of widths, so we have to do some special handling to keep things from overlapping
+@media (min-width: 581px) and (max-width: 680px) {
+  .closed #last-edited {
+      a:before {
+        content: "This page was last edited on "
+      }
+  }
+
+  .open #last-edited {
+    a:before {
+      content: "Last edit: "
+    }
+  }
+}
+
+/* this makes the sidebar able to either sit next to the main content on wide enough screens,
+    or cover over it on thinner screens */
+@media (min-width: 581px) {
+  #sidebar {
+    background: transparent;
+    backdrop-filter: unset;
+  }
+
+  #content-column {
+    margin-left: calc(var(--sidebar-width) - 48px);
+  }
+}
+
+@media (max-width: 580px) {
+  :root {
+    --sidebar-width: calc(100vw - 17px);
+  }
+}
 
 
 /* because i'm testing with different color schemes, and not all such schemes include

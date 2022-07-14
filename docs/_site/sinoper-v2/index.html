@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <title>Sinoper V.2 / Assistant</title>
+</head>
+
+<body class="closed">
+	<div id="sidebar">
+    <div id="arrow-button" title="toggle sidebar">
+        <span>Navigation (WIP)</span> <i class="fas fa-chevron-right"></i>
+    </div>
+    
+</div>
+
+	<div id="content-column"><header>
+	<div id="top-nav">
+		<ul>
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive home-tab">
+					<a href="/" title="Home">
+				       <i class='fas fa-home'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/sinoper-v1" title="Sinoper V.1">
+				       <i class='fas fa-feather-alt'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="active">
+					<a href="/sinoper-v2" title="Sinoper V.2">
+				       <i class='fas fa-crow'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/library" title="Library">
+				       <i class='fas fa-book'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/modding" title="Hades Modding">
+				       <i class='fas fa-code-branch'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/storyteller" title="Storyteller">
+				       <i class='fas fa-pen-fancy'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/genomics" title="Genomics Research">
+				       <i class='fas fa-dna'></i>
+					</a>
+				</li>
+				
+			
+		</ul>
+	</div>
+</header>
+<div id="content-page">
+        <div id="title">
+            Sinoper V.2 / Assistant
+            
+        </div>
+        <div id="main-content">
+            
+<h1 id="summary"><a href="#summary"><i class="fas fa-link"></i></a>Summary</h1>
+
+<p>Sinoper is a livestreaming assistant written in TypeScript with Node.js. He can connect to <a href="Connections/tw-user">Twitch.tv’s IRC</a> and <a href="Connections/misc#discord-connection">Discord’s servers</a> as a chatbot, access <a href="Connections/tw-api">Twitch’s API</a> to make requests (such as changing the stream’s title, category, and tags, or starting polls in chat), manage the song currently playing on stream through <a href="Connections/misc#spotify-connection">Spotify’s API</a>, and manage the <a href="Connections/overlay#overlay-client">stream overlay</a> through a <a href="Connections/overlay-server">local webserver</a>. His long-term memory (list of ‘bird facts’, dictionary of Twitch API ids corresponding to certain games and such, saved data on stream regulars, etc) is kept in <a href="Connections/mongo">MongoDB</a>. He’s also able to take input from the <a href="Connections/misc#midi-connection">MIDI</a> keyboard that I use as a makeshift stream deck.</p>
+
+<hr />
+
+<h1 id="abstract"><a href="#abstract"><i class="fas fa-link"></i></a>Abstract</h1>
+
+<p>An improvement over <a href="/sinoper-v1">V.1</a>, this version of Sinoper has progressed from being purely a chatbot to being a kind of digital assistant. Most specifically, his purpose now is as a livestreaming assistant for when I’m streaming on <a href="https://twitch.tv">Twitch.tv</a>. There’s a lot that goes into running a livestream and, although I can handle things on my own, Sinoper’s assistance makes a huge difference. Of course, as with all my projects, he also has a dual purpose in helping me learn and gain experience with a wide variety of tools. As of right now, I have most all of the pieces I need fully operational - I just need to connect them together.</p>
+
+<hr />
+
+<h1 id="timeline"><a href="#timeline"><i class="fas fa-link"></i></a>Timeline</h1>
+
+<p>I began rewriting Sinoper in <strong>June 2021</strong>, for <a href="/sinoper-v1/sunset">various reasons</a>. Originally, I began to rewrite it in Ruby for no particular reason other than that I enjoy the language, and development moved along fairly slowly. I got the basics of the Discord client and the Twitch API library functional over the course of <strong>2021</strong>, but I had trouble drafting up a plan for keeping all the pieces together using Ruby. I paused active development for the Fall semester of <strong>2021</strong> because I needed to focus on graduating, and I took the time to reconsider my choice of language. After some research, I came to realize around summertime that Ruby’s threading limitations would be too much to have to work around.</p>
+
+<p>From there, as I saw it, I had two real options: Python and JavaScript. Both languages are widely used for chatbot implementations for good reason. I chose JavaScript over Python for two main reasons. First of all, I didn’t have as much familiarity with JS at the time so I felt I had more to learn through it than I did through Python. And the second, more concrete reason is because one of the most important features of this implementation is its <a href="Connections/overlay">local webserver</a>, which would require some amount of JS anyways.</p>
+
+<p>With that decided, I began recreating the bot again with renewed confidence. In April, I reached out to a <a href="https://github.com/ZomoXYZ">friend of mine</a> with much more experience in JavaScript to ask for assistance. Once I’d explained the project, they actually recommended I switch over to TypeScript given the intended scope - and even walked me through the process of converting the JS project to TS. Since then, I’ve continued occasionally adding to the project during but, because of a number of life events <em>(including a wedding and a positive COVID test)</em>, I have not been able to spend as much time on it as I would’ve liked.</p>
+
+<hr />
+
+<h1 id="learning-opportunities"><a href="#learning-opportunities"><i class="fas fa-link"></i></a>Learning Opportunities</h1>
+
+<p>The most important thing I have learned from developing Sinoper is the importance of a good foundation. I know this isn’t a <em>new</em> lesson, but this project has shown me firsthand the real difference it can make. Sinoper V.1 lacked a foundation but I developed it anyways, and the project suffered for it. Sinoper V.2’s Ruby implementation also lacked a foundation, but I was mindful of that and didn’t over-invest my time. Now, Sinoper V.2’s TypeScript implementation has a very clear direction and structure plan in mind and development is going to be much smoother.</p>
+
+<p>Philosophical lessons like the above aside, Sinoper V.2 has also provided me with a platform to practice a variety of skills, and pick up a variety of others. Setting up the connections alone has been quite the task - I’m dealing with multiple APIs and concurrent message streams, becoming familiar with a NoSQL database, writing the front and backend of a webserver with a live socket, and making sure all my tokens are fresh. I’ve also been learning more about the frameworks I’m using. I’ve learned the powers (and limitations) of Node.JS and been introduced to implementing an involved build process, and I intend to use that familiarity to be able learn other frameworks more quickly.</p>
+
+        </div>
+    </div>
+    <span id='post-its'>
+        <span id="twitch" class="post-it">
+                <a href="https://twitch.tv/qaznotquaz" target="_blank" rel="noopener noreferrer" title="Watch me live on Twitch!">
+                    <i class="fab fa-twitch"></i>
+                </a>
+            </span>
+        <span id="github-profile" class="post-it">
+            <a href="https://github.com/qaznotquaz" target="_blank" rel="noopener noreferrer" title="View my GitHub profile!">
+                <i class="fab fa-github"></i>
+            </a>
+        </span>
+        <span id="email" class="post-it">
+            <a href="mailto:jess@sinoper.dev?subject=Portfolio" title="Email me at jess@sinoper.dev!">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </span>
+        <span id="last-edited" class="post-it">
+            <a><i>6/26/2022</i></a>
+        </span>
+    </span>
+</div>
+
+</body>
+<script src="/assets/scripts/sidebar-toggle-script.js"></script>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <title>Core and Structure</title>
+</head>
+
+<body class="closed">
+	<div id="sidebar">
+    <div id="arrow-button" title="toggle sidebar">
+        <span>Navigation (WIP)</span> <i class="fas fa-chevron-right"></i>
+    </div>
+    
+</div>
+
+	<div id="content-column"><header>
+	<div id="top-nav">
+		<ul>
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive home-tab">
+					<a href="/" title="Home">
+				       <i class='fas fa-home'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/sinoper-v1" title="Sinoper V.1">
+				       <i class='fas fa-feather-alt'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="active">
+					<a href="/sinoper-v2" title="Sinoper V.2">
+				       <i class='fas fa-crow'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/library" title="Library">
+				       <i class='fas fa-book'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/modding" title="Hades Modding">
+				       <i class='fas fa-code-branch'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/storyteller" title="Storyteller">
+				       <i class='fas fa-pen-fancy'></i>
+					</a>
+				</li>
+				
+			
+			    
+			    
+			    
+				
+
+				
+				<li class="inactive">
+					<a href="/genomics" title="Genomics Research">
+				       <i class='fas fa-dna'></i>
+					</a>
+				</li>
+				
+			
+		</ul>
+	</div>
+</header>
+<div id="content-page">
+        <div id="title">
+            Core and Structure
+            
+        </div>
+        <div id="main-content">
+            
+<h1 id="structure"><a href="#structure"><i class="fas fa-link"></i></a>Structure</h1>
+
+<p>Sinoper’s overall structure stems from a <strong>Core</strong>, which has a number of <a href="Connections">connections</a> attached to it. Each connection is contained directly within the Core, and event handlers are attached on startup to each part of each connection that can generate an event - as of right now, this includes twitch messages and midi messages.</p>
+
+<p>Connections will occasionally require special arrangements of their own, of course. As of right now, there are two additional components needed. The first is a small suite of modules to facilitate the use of various secret tokens - setting them up as environment variables, and generating tokens through different flow methods. The second is the <a href="overlay#overlay-client">Overlay Client</a> since it needs to be built separately from its <a href="overlay#overlay-server">connection, aka the Overlay Server</a> for file management reasons.</p>
+
+<hr />
+
+<h1 id="command-core"><a href="#command-core"><i class="fas fa-link"></i></a>Command Core</h1>
+
+<p>This is the central core of Sinoper which performs all of the handling of commands. It accepts inputs from Twitch IRC, Discord, Spotify <em>(unimplemented)</em>, and MIDI, parses those inputs into commands, and then makes sure the requisite action is performed.</p>
+
+<hr />
+
+<h1 id="command-parsing-via-regex"><a href="#command-parsing-via-regex"><i class="fas fa-link"></i></a>Command Parsing via Regex</h1>
+
+<p>Although each form of input has an event handler attached to it, the most involved event handler is the one which handles both Twitch and Discord messages. Instead of commands being formatted traditionally like <code class="language-plaintext highlighter-rouge">command arg-1 arg-2</code>, I wanted to subject myself to a particular challenge of parsing commands from plain sentences. For example, I can tell the bot to shut down by saying <code class="language-plaintext highlighter-rouge">:V you can go to sleep now, buddy</code>. The reasoning for this is discussed more <a href="/sinoper-v1#command-parsing-via-regex">here</a>.</p>
+
+<div class="under-construction"><h1><a><i class="fas fa-tools"></i></a>This page is still under construction.</h1></div>
+
+
+        </div>
+    </div>
+    <span id='post-its'>
+        <span id="twitch" class="post-it">
+                <a href="https://twitch.tv/qaznotquaz" target="_blank" rel="noopener noreferrer" title="Watch me live on Twitch!">
+                    <i class="fab fa-twitch"></i>
+                </a>
+            </span>
+        <span id="github-profile" class="post-it">
+            <a href="https://github.com/qaznotquaz" target="_blank" rel="noopener noreferrer" title="View my GitHub profile!">
+                <i class="fab fa-github"></i>
+            </a>
+        </span>
+        <span id="email" class="post-it">
+            <a href="mailto:jess@sinoper.dev?subject=Portfolio" title="Email me at jess@sinoper.dev!">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </span>
+        <span id="last-edited" class="post-it">
+            <a><i>6/26/2022</i></a>
+        </span>
+    </span>
+</div>
+
+</body>
+<script src="/assets/scripts/sidebar-toggle-script.js"></script>
+</html>
